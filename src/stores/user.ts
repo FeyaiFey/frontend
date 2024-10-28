@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', {
     userInfo:undefined as UserInfo| undefined,
     token: '',
     rememberMe:true,
-    loginInfo:undefined ,   // 登录的账密
+    loginInfo:undefined as UserLoginType| undefined,    // 登录的账密
     roleRouters:undefined as string[] | undefined
   }),
   getters:{         // 获取状态属性的方法 类似 computer
@@ -43,6 +43,9 @@ export const useUserStore = defineStore('user', {
     },
     setUserInfo(userInfo?:UserInfo){
       this.userInfo = userInfo
+    },
+    setLoginInfo(loginInfo?:UserLoginType){
+      this.loginInfo = loginInfo
     },
     setRememberMe(rememberMe:boolean){
       this.rememberMe = rememberMe

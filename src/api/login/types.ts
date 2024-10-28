@@ -1,9 +1,10 @@
 export interface UserLoginType {
-    username:string
+    email:string
     password:string
 }
 
 export interface UserInfo {
+    email:string
     username:string
     rolename:string
 }
