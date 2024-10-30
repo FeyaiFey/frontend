@@ -3,7 +3,9 @@ import colors from 'windicss/colors'
 import plugin from 'windicss/plugin'
 
 export default defineConfig({
-  attributify: true,
+  attributify: {
+    prefix: 'w:',
+  },
   darkMode: 'class', // or 'media'
   theme: {
     extend: {

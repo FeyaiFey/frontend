@@ -1,8 +1,8 @@
 <template>
-    <div class="w-[50%]">
+    <div w:w="lg:4/5 md:1/2 sm:11/12">
         <el-form :model="registerForm" ref="registerFormRef" :rules="rules" size="large">
             <h1 style="width: 100%;text-align: center;margin-bottom: 30px;;font-size: 2rem;font-weight: bolder;">账号注册</h1>
-
+            <h1 w:w="full" w:font="bold" w:text="20px center opacity-40" >测试</h1>
             <el-form-item prop="username">
                 <el-input v-model="registerForm.username" placeholder="用户名(昵称)" prefix-icon="User" size="large"/>
             </el-form-item>
@@ -34,14 +34,14 @@
         </el-form>
     </div>
     <button 
-  bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
-  text="sm white"
-  font="mono light"
-  p="y-2 x-4"
-  border="2 rounded blue-200"
->
-  Button
-</button>
+        w:bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
+        w:text="sm white"
+        w:font="mono light"
+        w:p="y-2 x-4"
+        w:border="2 rounded blue-200"
+        >
+        Button
+    </button>
 
 </template>
 
