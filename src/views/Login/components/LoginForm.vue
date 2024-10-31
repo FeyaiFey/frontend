@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[50%]">
+    <div w:w="lg:4/5 md:1/2 sm:11/12">
         <el-form :model="loginForm" ref="loginFormRef" :rules="rules" size="large">
             <h1 style="width: 100%;text-align: center;margin-bottom: 30px;font-size: 2rem;font-weight: bolder;">登录</h1>
   

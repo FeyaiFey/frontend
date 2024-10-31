@@ -6,6 +6,7 @@ export default defineConfig({
   attributify: {
     prefix: 'w:',
   },
+  preflight: false,
   darkMode: 'class', // or 'media'
   theme: {
     extend: {
