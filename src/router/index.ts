@@ -1,64 +1,79 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import { defineComponent } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
+import type { App } from 'vue'
+
+type Component<T = any> =
+  | ReturnType<typeof defineComponent>
+  | (() => Promise<typeof import('*.vue')>)
+  | (() => Promise<T>)
+
+type Recordable<T = any, K extends string | number | symbol = string> = Record<K extends null | undefined ? string : K, T>
+
+interface RouteMetaCustom extends Record<string | number | symbol, unknown> {
+    hidden?: boolean
+    alwaysShow?: boolean
+    title?: string
+    icon?: string
+    noCache?: boolean
+    breadcrumb?: boolean
+    affix?: boolean
+    activeMenu?: string
+    noTagsView?: boolean
+    canTo?: boolean
+    permission?: string[]
+  }
+
+interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'children'> {
+    name: string
+    meta: RouteMetaCustom
+    component?: Component | string
+    children?: AppRouteRecordRaw[]
+    props?: Recordable
+    fullPath?: string
+}
+
+export const constantRouterMap: AppRouteRecordRaw[] = [
+  {
+    path: '/',
+    component: () => import('@/views/AssyHistory/AssyHistory.vue'),
+    name: 'Test',
+    meta: {
+      hidden: true,
+      title: 'test',
+      noTagsView: true
+    }
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/Login/components/LoginForm.vue'),
+    name: 'Login',
+    meta: {
+      hidden: true,
+      title: 'login',
+      noTagsView: true
+    }
+  },
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('@/views/AssyHistory/AssyHistory.vue')
-    },
-
-  ]
+  history: createWebHashHistory(),
+  strict: true,
+  routes: constantRouterMap as RouteRecordRaw[],
+  scrollBehavior: () => ({ left: 0, top: 0 })
 })
 
+export const resetRouter = (): void => {
+  router.getRoutes().forEach((route) => {
+    const { name } = route
+    if (name && !['Redirect', 'Login', 'NoFind', 'Root'].includes(name as string)) {
+      router.hasRoute(name) && router.removeRoute(name)
+    }
+  })
+}
+
+export const setupRouter = (app: App<Element>) => {
+  app.use(router)
+}
+
 export default router
-
-
-
-
-// import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-// import { useAuthStore } from '@/stores/auth';
-// import Layout from '@/views/Layout.vue';
-// import Login from '@/views/Login.vue';
-// import Home from '@/views/Home.vue';
-
-// const routes: Array<RouteRecordRaw> = [
-//   {
-//     path: '/',
-//     component: Layout,
-//     children: [
-//       {
-//         path: '',
-//         name: 'Home',
-//         component: Home
-//       }
-//     ],
-//     meta: { requiresAuth: true }
-//   },
-//   {
-//     path: '/login',
-//     name: 'Login',
-//     component: Login
-//   }
-// ];
-
-// const router = createRouter({
-//   history: createWebHistory(),
-//   routes
-// });
-
-// // 路由守卫，检查 token
-// router.beforeEach((to, from, next) => {
-//   const authStore = useAuthStore();
-
-//   if (to.meta.requiresAuth && !authStore.isTokenValid()) {
-//     next({ name: 'Login' });  // 没有 token 则重定向到 Login 页面
-//   } else if (to.name === 'Login' && authStore.isTokenValid()) {
-//     next({ name: 'Home' });  // 如果已登录，重定向到首页
-//   } else {
-//     next();  // 否则正常进入目标路由
-//   }
-// });
-
-// export default router;

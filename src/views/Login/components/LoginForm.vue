@@ -41,9 +41,13 @@
     import { useUserStore } from '@/stores/user';
     import { useRouter } from 'vue-router';
     import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
+    import { getRouteApi } from '@/api/login';
+    import { usePermissionStore } from '@/stores/permission';
     import axios from 'axios';
 
+
     const user = useUserStore()
+    const permissionStore = usePermissionStore()
 
     const { currentRoute, addRoute, push } = useRouter()
 
@@ -146,7 +150,7 @@
                       user.setLoginInfo(undefined)
                     }
                     user.setRememberMe(unref(rememberMe))
-                    // userStore.setUserInfo(response.data)    // 注意后端返回的数据格式--------
+                    // userStore.setUserInfo(response.data)    // 注意后端返回的数据格式(返回用户名或token等)--------
                     // getRole()
                     ElMessage.success("登录成功！");
                     isloading.value = false;
@@ -169,6 +173,24 @@
     }
 
     // 获取角色路由信息
+
+    const getRole = async () => {
+        const params = {
+            email: loginForm.email
+        }
+        const res = await getRouteApi(params)
+        if (res) {
+            const routers = res.data
+            user.setRoleRouters(routers)
+            await permissionStore.generateRoutes(routers).catch(() => {})
+            permissionStore.getAddRouters.forEach((route) => {
+                addRoute(route as RouteRecordRaw) // 动态添加可访问路由表
+            })
+            permissionStore.setIsAddRouters(true)
+            push({ path: redirect.value || permissionStore.addRouters[0].path })
+    }
+    }
+
     
 </script>
 

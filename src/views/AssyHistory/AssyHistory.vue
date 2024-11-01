@@ -1,61 +1,46 @@
 <script setup lang="ts">
-import axios from 'axios';
 import { onMounted } from 'vue';
 import { ref } from 'vue';
+import { testapi } from '@/api/test';
 
 const testData = ref([])
-const totalPage = ref(null)
+const totalPage = ref()
 const pagesize = ref(15)
 const currentPage = ref(1)
 
 
 
 onMounted(async ()=>{
-    const res = await axios.get("http://127.0.0.1:8000/test")
-    testData.value = res.data.data
-    totalPage.value = res.data.total
+    const res = await testapi()
+    testData.value = res.data
+    totalPage.value = res.total
 })
 
 
-const handleCurrentChange = async (page = currentPage.value) =>{
-    const res = await axios.get('http://127.0.0.1:8000/test',{
-        params:{page,page_size:pagesize.value}
-    });
-    testData.value = res.data.data;
-    totalPage.value = res.data.total;
-    currentPage.value = page
+const handleCurrentChange = async (cp = currentPage.value) =>{
+    const res = await testapi({page:cp,page_size:pagesize.value})
+    // const res = await axios.get('http://127.0.0.1:8000/test',{
+    //     params:{page:cp,page_size:pagesize.value}
+    // });
+    testData.value = res.data;
+    totalPage.value = res.total;
+    currentPage.value = cp
 }
 
 const handleSizeChange = async (ps = pagesize.value) =>{
-    const res = await axios.get('http://127.0.0.1:8000/test',{
-        params:{page:1,page_size:ps}
-    });
-    testData.value = res.data.data;
-    totalPage.value = res.data.total;
+    const res = await testapi({page:1,page_size:ps})
+    // const res = await axios.get('http://127.0.0.1:8000/test',{
+    //     params:{page:1,page_size:ps}
+    // });
+    testData.value = res.data;
+    totalPage.value = res.total;
     pagesize.value = ps
     currentPage.value = 1
 }
-
-// const getData = async()=>{
-//     const res = await axios.get("http://127.0.0.1:8000/test")
-//     const data = res.data
-//     console.log(data)
-//     return data
-// }
-
-// const data = [
-//     {
-//         'item_name':'HS9069',
-//         'item_class':"FSDFS",
-//         'main_chip':"main_chipV",
-//         'deputy_chip':'FSDFSD'
-//     }
-// ]
     
 </script>
 
 <template>
-    <!-- <el-button type="primary" @click="getData">获取数据</el-button> -->
     <div w:w="lg:3/5 md:4/5 sm:full">
         <el-table :data="testData" border w:w="lg:4/5 md:1/2 sm:11/12">
             <el-table-column prop="item_name" label="物料名称" width="400" />
@@ -64,13 +49,15 @@ const handleSizeChange = async (ps = pagesize.value) =>{
             <el-table-column prop="deputy_chip" label="副芯" width="auto" />
         </el-table>
         <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage"
+            v-model:current-page="currentPage"
+            v-model:page-size="pagesize"
             :page-sizes="[15, 20, 30, 40, 50]"
-            :page-size="pagesize"
+            size="default"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="totalPage">
-        </el-pagination>
+            :total="totalPage"
+            :background=true
+            :hide-on-single-page=true
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange" />
     </div>
 </template>

@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@types/qs": "^6.9.16",
     "axios": "^1.7.7",
     "element-plus": "^2.8.6",
     "nprogress": "^0.2.0",
     "pinia": "^2.2.4",
     "pinia-plugin-persistedstate": "^4.1.2",
+    "qs": "^6.13.0",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
   },
