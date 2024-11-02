@@ -150,7 +150,7 @@
                       user.reset()
                     }
                     
-                    // getRole()
+                    getRole()
                     ElMessage.success(`登录成功！欢迎：${response.data.username}`);
                     isloading.value = false;
                   }

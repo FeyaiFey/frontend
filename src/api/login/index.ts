@@ -31,7 +31,6 @@ export const registerApi = (data: RegisterType): Promise<IResponse> => {
   return request.post({ url: '/auth/register', data})
 }
 
-
 export const getRouteApi = (params: RoleParams): Promise<IResponse> => {
-  return request.get({ url: '/user/role', params})
+  return request.get({ url: '/auth/route', params})
 }

@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import type { App } from 'vue'
 import { defineComponent } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
-import type { App } from 'vue'
 
 type Component<T = any> =
   | ReturnType<typeof defineComponent>

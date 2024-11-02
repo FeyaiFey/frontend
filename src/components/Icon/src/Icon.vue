@@ -12,7 +12,7 @@ const prefixCls = getPrefixCls('icon')
 
 const props = defineProps({
   // icon name
-  icon: propTypes.string,
+  icon: propTypes.string ,
   // icon color
   color: propTypes.string,
   // icon size

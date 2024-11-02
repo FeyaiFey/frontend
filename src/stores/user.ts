@@ -1,5 +1,31 @@
 import { defineStore } from 'pinia'
+import type { RouteRecordRaw } from 'vue-router'
 import type { UserInfo , UserLoginType } from '@/api/login/types'
+
+interface RouteMetaCustom extends Record<string | number | symbol, unknown> {
+    hidden?: boolean
+    alwaysShow?: boolean
+    title?: string
+    icon?: string
+    noCache?: boolean
+    breadcrumb?: boolean
+    affix?: boolean
+    activeMenu?: string
+    noTagsView?: boolean
+    canTo?: boolean
+    permission?: string[]
+  }
+
+interface AppCustomRouteRecordRaw
+    extends Omit<RouteRecordRaw, 'meta' | 'component' | 'children'> {
+    name: string
+    meta: RouteMetaCustom
+    component: string
+    path: string
+    redirect: string
+    children?: AppCustomRouteRecordRaw[]
+  }
+
 
 export interface UserState{
   userInfo?:UserInfo
@@ -34,7 +60,7 @@ export const useUserStore = defineStore('user', {
     getLoginInfo():UserLoginType | undefined{
       return this.loginInfo
     },
-    getRoleRouters():string[] | undefined {
+    getRoleRouters():string[] | AppCustomRouteRecordRaw[] | undefined {
       return this.roleRouters
     },
   },
