@@ -11,6 +11,14 @@ export default defineConfig({
     vueJsx(),
     WindiCSS(),
   ],
+  css: {
+    preprocessorOptions: {
+      less: {
+        additionalData: '@import "./src/styles/variables.module.less";',
+        javascriptEnabled: true
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

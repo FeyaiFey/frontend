@@ -36,21 +36,21 @@ interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'children'> {
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
+    component: () => import('@/views/Login/Login.vue'),
+    name: 'Login',
+    meta: {
+      hidden: true,
+      title: 'login',
+      noTagsView: true
+    }
+  },
+  {
+    path: '/test',
     component: () => import('@/views/AssyHistory/AssyHistory.vue'),
     name: 'Test',
     meta: {
       hidden: true,
       title: 'test',
-      noTagsView: true
-    }
-  },
-  {
-    path: '/login',
-    component: () => import('@/views/Login/components/LoginForm.vue'),
-    name: 'Login',
-    meta: {
-      hidden: true,
-      title: 'login',
       noTagsView: true
     }
   },

@@ -1,5 +1,5 @@
 <template>
-    <div w:w="lg:4/5 md:1/2 sm:11/12">
+    <div w:w="lg:400px md:4/5 sm:11/12">
         <el-form :model="loginForm" ref="loginFormRef" :rules="rules" size="large">
             <h1 style="width: 100%;text-align: center;margin-bottom: 30px;font-size: 2rem;font-weight: bolder;">登录</h1>
   
@@ -41,7 +41,7 @@
     import { useUserStore } from '@/stores/user';
     import { useRouter } from 'vue-router';
     import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
-    import { getRouteApi } from '@/api/login';
+    import { loginApi,getRouteApi } from '@/api/login';
     import { usePermissionStore } from '@/stores/permission';
     import axios from 'axios';
 
@@ -135,10 +135,7 @@
           if (valid) {
               isloading.value = true;              
               try{
-                  const response = await axios.post("http://127.0.0.1:8000/auth/login",
-                  {"email":loginForm.email,
-                    "password":loginForm.password
-                  })
+                  const response = await loginApi({"email":loginForm.email,"password":loginForm.password})
                   if(response){
                     // 是否记住我
                     if(unref(rememberMe)){
@@ -146,13 +143,15 @@
                         email: loginForm.email,
                         password: loginForm.password
                       })
+                      user.setRememberMe(unref(rememberMe))
+                      user.setToken(response.tokeninfo.access_token)
+                      user.setUserInfo(response.data)
                     }else {
-                      user.setLoginInfo(undefined)
+                      user.reset()
                     }
-                    user.setRememberMe(unref(rememberMe))
-                    // userStore.setUserInfo(response.data)    // 注意后端返回的数据格式(返回用户名或token等)--------
+                    
                     // getRole()
-                    ElMessage.success("登录成功！");
+                    ElMessage.success(`登录成功！欢迎：${response.data.username}`);
                     isloading.value = false;
                   }
               }catch(error:any){

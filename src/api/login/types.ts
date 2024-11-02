@@ -4,7 +4,8 @@ export interface UserLoginType {
 }
 
 export interface UserInfo {
+    id:string
     email:string
     username:string
-    rolename:string
+    role_id:number
 }

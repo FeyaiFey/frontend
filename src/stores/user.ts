@@ -19,7 +19,7 @@ export const useUserStore = defineStore('user', {
     roleRouters:undefined as string[] | undefined
   }),
   getters:{         // 获取状态属性的方法 类似 computer
-    gerUserInfo():UserInfo | undefined {
+    getUserInfo():UserInfo | undefined {
       return this.userInfo
     },
     getTokenKey():string{
@@ -64,6 +64,8 @@ export const useUserStore = defineStore('user', {
       this.setToken("")
       this.setUserInfo(undefined)
       this.setRoleRouters([])
+      this.setLoginInfo(undefined)
+      this.setRememberMe(false)
     },
     logout() {
       this.reset()

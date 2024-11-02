@@ -1,4 +1,7 @@
 import 'virtual:windi.css'
+import 'animate.css'
+// 引入全局样式
+import '@/styles/index.less'
 
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
