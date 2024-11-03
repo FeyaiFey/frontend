@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { RouteRecordRaw } from 'vue-router'
 import type { UserInfo , UserLoginType } from '@/api/login/types'
+import { ElMessageBox } from 'element-plus'
 
 interface RouteMetaCustom extends Record<string | number | symbol, unknown> {
     hidden?: boolean
@@ -95,6 +96,18 @@ export const useUserStore = defineStore('user', {
     },
     logout() {
       this.reset()
+    },
+    logoutConfirm() {
+      ElMessageBox.confirm('确认退出?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+            this.reset()
+          }
+        )
+        .catch(() => {})
     },
   },
   persist:true

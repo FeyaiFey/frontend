@@ -34,3 +34,7 @@ export const registerApi = (data: RegisterType): Promise<IResponse> => {
 export const getRouteApi = (params: RoleParams): Promise<IResponse> => {
   return request.get({ url: '/auth/route', params})
 }
+
+export const loginOutApi = (): Promise<IResponse> => {
+  return request.get({ url: '/auth/logout'})
+}

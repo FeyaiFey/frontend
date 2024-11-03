@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import type { App } from 'vue'
 import { defineComponent } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
+import { Layout } from '@/utils/routerHelper'
 
 type Component<T = any> =
   | ReturnType<typeof defineComponent>
@@ -36,24 +37,74 @@ interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'children'> {
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
+    component: Layout,
+    redirect: '/assy/assyhistory',
+    name: 'Root',
+    meta: {
+      hidden: true
+    }
+  },
+  {
+    path: '/redirect',
+    component: Layout,
+    name: 'Redirect',
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        name: 'Redirect',
+        component: () => import('@/views/Redirect/Redirect.vue'),
+        meta: {}
+      }
+    ],
+    meta: {
+      hidden: true,
+      noTagsView: true
+    }
+  },
+  
+  {
+    path: '/login',
     component: () => import('@/views/Login/Login.vue'),
     name: 'Login',
     meta: {
       hidden: true,
-      title: 'login',
+      title: '登录',
       noTagsView: true
     }
   },
+  // {
+  //   path: '/personal',
+  //   component: Layout,
+  //   redirect: '/personal/personal-center',
+  //   name: 'Personal',
+  //   meta: {
+  //     title: '个人',
+  //     hidden: true,
+  //     canTo: true
+  //   },
+  //   children: [
+  //     {
+  //       path: 'personal-center',
+  //       component: () => import('@/views/Personal/PersonalCenter/PersonalCenter.vue'),
+  //       name: 'PersonalCenter',
+  //       meta: {
+  //         title: '个人中心',
+  //         hidden: true,
+  //         canTo: true
+  //       }
+  //     }
+  //   ]
+  // },
   {
-    path: '/test',
-    component: () => import('@/views/AssyHistory/AssyHistory.vue'),
-    name: 'Test',
+    path: '/404',
+    component: () => import('@/views/Error/404.vue'),
+    name: 'NoFind',
     meta: {
       hidden: true,
-      title: 'test',
+      title: '404',
       noTagsView: true
     }
-  },
+  }
 ]
 
 const router = createRouter({

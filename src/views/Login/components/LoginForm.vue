@@ -43,7 +43,6 @@
     import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
     import { loginApi,getRouteApi } from '@/api/login';
     import { usePermissionStore } from '@/stores/permission';
-    import axios from 'axios';
 
 
     const user = useUserStore()
