@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTagsViewStore } from '@/stores/tagsView'
 import { useAppStore } from '@/stores/app'
-// import { Footer } from '@/components/Footer'
+import { Footer } from '@/components/Footer'
 import { computed } from 'vue'
 
 const appStore = useAppStore()

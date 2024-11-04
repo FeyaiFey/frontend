@@ -107,6 +107,41 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   }
 ]
 
+export const asyncRouterMap: AppRouteRecordRaw[] = [
+  {
+    path: '/assy',
+    component: Layout,
+    redirect: '/assy/assyhistory',
+    name: 'assy',
+    meta: {
+      title: '封装',
+      icon: 'vi-ant-design:dashboard-filled',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'assyhistory',
+        component: () => import('@/views/AssyHistory/AssyHistory.vue'),
+        name: 'assyHistory',
+        meta: {
+          title: '封装历史记录',
+          noCache: true,
+          affix: true
+        }
+      },
+      {
+        path: 'test',
+        component: () => import('@/views/AssyHistory/AssyHistory.vue'),
+        name: 'Workplace',
+        meta: {
+          title: '测试',
+          noCache: true
+        }
+      }
+    ]
+  },
+]
+
 const router = createRouter({
   history: createWebHashHistory(),
   strict: true,

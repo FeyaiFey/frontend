@@ -179,8 +179,11 @@
         const res = await getRouteApi(params)
         if (res) {
             const routers = res.data
-            user.setRoleRouters(routers)
-            await permissionStore.generateRoutes(routers).catch(() => {})
+
+            const apiValueList = routers.map((element:any) => element.api);
+
+            user.setRoleRouters(apiValueList)
+            await permissionStore.generateRoutes('frontEnd', apiValueList).catch(() => {})
             permissionStore.getAddRouters.forEach((route) => {
                 addRoute(route as RouteRecordRaw) // 动态添加可访问路由表
             })

@@ -35,7 +35,7 @@ const request = (option: AxiosConfig) => {
     responseType: responseType,
     headers: {
       'Content-Type': 'application/json',
-      [userStore.getTokenKey ?? 'Authorization']: userStore.getToken ?? '',
+      'Authorization': `Bearer ${userStore.getToken ?? ''}`,
       ...headers
     }
   })

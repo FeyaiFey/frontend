@@ -3,6 +3,9 @@ import 'animate.css'
 // 引入全局样式
 import '@/styles/index.less'
 
+// 全局组件
+import { setupGlobCom } from '@/components'
+
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -29,5 +32,6 @@ pinia.use(piniaPersistedstate)
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
+app.use(setupGlobCom)
 
 app.mount('#app')

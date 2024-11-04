@@ -79,7 +79,7 @@ router.beforeEach(async (to, from, next) => {
       const roleRouters = userStore.getRoleRouters
 
       // 使用动态路由
-      permissionStore.generateRoutes(roleRouters as AppCustomRouteRecordRaw[])
+      permissionStore.generateRoutes('frontEnd', roleRouters as string[])
           
 
       permissionStore.getAddRouters.forEach((route) => {
