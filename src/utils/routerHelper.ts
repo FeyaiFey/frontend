@@ -135,6 +135,7 @@ export const generateRoutesByFrontEnd = (
   return res
 }
 
+// 后端控制路由
 export const generateRoutesByServer = (routes: AppCustomRouteRecordRaw[]): AppRouteRecordRaw[] => {
     const res: AppRouteRecordRaw[] = []
     for (const route of routes) {

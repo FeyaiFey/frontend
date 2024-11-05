@@ -8,6 +8,7 @@ import { usePermissionStore } from '@/stores/permission'
 import { usePageLoading } from '@/hooks/usePageLoading'
 import { NO_REDIRECT_WHITE_LIST } from '@/constants'
 import { useUserStore } from '@/stores/user'
+import { useTagsViewStore } from './stores/tagsView'
 
 type Component<T = any> =
   | ReturnType<typeof defineComponent>
@@ -74,13 +75,17 @@ router.beforeEach(async (to, from, next) => {
         next()
         return
       }
-
       // 开发者可根据实际情况进行修改
-      const roleRouters = userStore.getRoleRouters
+      const roleRouters = userStore.getRoleRouters || []
 
-      // 使用动态路由
-      permissionStore.generateRoutes('frontEnd', roleRouters as string[])
-          
+      // 是否使用动态路由
+      if (appStore.getDynamicRouter) {
+        appStore.serverDynamicRouter
+          ? await permissionStore.generateRoutes('server', roleRouters as AppCustomRouteRecordRaw[])
+          : await permissionStore.generateRoutes('frontEnd', roleRouters as string[])
+      } else {
+        await permissionStore.generateRoutes('static')
+      }
 
       permissionStore.getAddRouters.forEach((route) => {
         router.addRoute(route as unknown as RouteRecordRaw) // 动态添加可访问路由表

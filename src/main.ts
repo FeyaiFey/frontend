@@ -1,37 +1,61 @@
+import 'vue/jsx'
+
 import 'virtual:windi.css'
 import 'animate.css'
 // 引入全局样式
 import '@/styles/index.less'
 
+
+
+// 引入状态管理
+import { setupStore } from '@/stores'
+
 // 全局组件
 import { setupGlobCom } from '@/components'
 
-import { createApp } from 'vue'
+// 引入element-plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import { createPinia } from 'pinia'
-import piniaPersistedstate from 'pinia-plugin-persistedstate'
+
+
+// 引入全局样式
+import '@/styles/index.less'
+
+// 引入动画
+import '@/plugins/animate.css'
+
+// 路由
+import { setupRouter } from './router'
+
+// 权限
+import { setupPermission } from './directives'
+
+import { createApp } from 'vue'
 
 import App from './App.vue'
-import router from './router'
+
 import './permission'
 
+// 创建实例
+const setupAll = async () => {
+  const app = createApp(App)
 
-
-
-const app = createApp(App)
-
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
 
-const pinia = createPinia()
-pinia.use(piniaPersistedstate)
+  await app.use(ElementPlus)
+  
+  setupStore(app)
 
-app.use(pinia)
-app.use(router)
-app.use(ElementPlus)
-app.use(setupGlobCom)
+  setupGlobCom(app)
 
-app.mount('#app')
+  setupRouter(app)
+
+  setupPermission(app)
+
+  app.mount('#app')
+}
+
+setupAll()

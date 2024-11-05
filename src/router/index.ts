@@ -61,7 +61,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
       noTagsView: true
     }
   },
-  
   {
     path: '/login',
     component: () => import('@/views/Login/Login.vue'),
@@ -72,29 +71,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
       noTagsView: true
     }
   },
-  // {
-  //   path: '/personal',
-  //   component: Layout,
-  //   redirect: '/personal/personal-center',
-  //   name: 'Personal',
-  //   meta: {
-  //     title: '个人',
-  //     hidden: true,
-  //     canTo: true
-  //   },
-  //   children: [
-  //     {
-  //       path: 'personal-center',
-  //       component: () => import('@/views/Personal/PersonalCenter/PersonalCenter.vue'),
-  //       name: 'PersonalCenter',
-  //       meta: {
-  //         title: '个人中心',
-  //         hidden: true,
-  //         canTo: true
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: '/404',
     component: () => import('@/views/Error/404.vue'),
@@ -132,7 +108,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       {
         path: 'test',
         component: () => import('@/views/AssyHistory/AssyHistory.vue'),
-        name: 'Workplace',
+        name: 'test',
         meta: {
           title: '测试',
           noCache: true
