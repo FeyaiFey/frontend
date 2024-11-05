@@ -11,17 +11,15 @@ const appStore = useAppStore()
 
 const greyMode = computed(() => appStore.getGreyMode)
 
+const currentSize = computed(() => appStore.getCurrentSize)
+
 appStore.initTheme()
 </script>
 
 <template>
-    <div>
-      <RouterView :class="greyMode ? `${prefixCls}-grey-mode` : ''" />
-    </div>
-
-
-  
-
+  <ConfigGlobal :size="currentSize">
+    <RouterView :class="greyMode ? `${prefixCls}-grey-mode` : ''" />
+  </ConfigGlobal>
 </template>
 
 <style lang="less">
