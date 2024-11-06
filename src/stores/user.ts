@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import type { UserInfo , UserLoginType } from '@/api/login/types'
 import { ElMessageBox } from 'element-plus'
+import { useTagsViewStore } from './tagsView'
+import router from '@/router'
 
 export interface UserState{
   userInfo?:UserInfo
@@ -62,10 +64,13 @@ export const useUserStore = defineStore('user', {
       this.roleRouters = roleRouters
     },
     reset(){
+      const tagsViewStore = useTagsViewStore()
+      tagsViewStore.delAllViews()
       this.setToken("")
       this.setUserInfo(undefined)
       this.setRoleRouters([])
       this.setLoginInfo(undefined)
+      router.replace('/login')
     },
     logout() {
       this.reset()
