@@ -1,37 +1,35 @@
 <template>
-    <div w:w="lg:4/5 md:1/2 sm:11/12">
-        <el-form :model="registerForm" ref="registerFormRef" :rules="rules" size="large">
-            <h1 style="width: 100%;text-align: center;margin-bottom: 30px;font-size: 2rem;font-weight: bolder;">账号注册</h1>
-            <el-form-item prop="username">
-                <el-input v-model="registerForm.username" placeholder="用户名(昵称)" prefix-icon="User" size="large"/>
-            </el-form-item>
+    <el-form :model="registerForm" ref="registerFormRef" :rules="rules" size="large" class="dark:(border-1 border-[var(--el-border-color)] border-solid) w-[100%]">
+        <h1 style="width: 100%;text-align: center;margin-bottom: 30px;font-size: 2rem;font-weight: bolder;">账号注册</h1>
+        <el-form-item prop="username">
+            <el-input v-model="registerForm.username" placeholder="用户名(昵称)" prefix-icon="User" size="large"/>
+        </el-form-item>
 
-            <el-form-item prop="email">
-                <el-input v-model="registerForm.email" placeholder="邮箱账号" prefix-icon="Message" size="large"/>
-            </el-form-item>
+        <el-form-item prop="email">
+            <el-input v-model="registerForm.email" placeholder="邮箱账号" prefix-icon="Message" size="large"/>
+        </el-form-item>
 
-            <el-form-item prop="pass">
-                <el-input v-model="registerForm.pass" type="password" placeholder="输入密码" prefix-icon="Lock" show-password size="large" />
-            </el-form-item>
+        <el-form-item prop="pass">
+            <el-input v-model="registerForm.pass" type="password" placeholder="输入密码" prefix-icon="Lock" show-password size="large" />
+        </el-form-item>
 
-            <el-form-item prop="word">
-                <el-input v-model="registerForm.word" type="password" placeholder="确认密码" prefix-icon="Lock" show-password size="large" />
-            </el-form-item>
+        <el-form-item prop="word">
+            <el-input v-model="registerForm.word" type="password" placeholder="确认密码" prefix-icon="Lock" show-password size="large" />
+        </el-form-item>
 
-            <el-form-item prop="role_number">
-                <el-input v-model="registerForm.role_number" placeholder="权限码(非必填)" prefix-icon="Bell" size="large" />
-            </el-form-item>
-            
-            <el-form-item  size="large">
-                <el-button type="primary" @click="register" :loading="isloading" style="width: 100%;font-size: 1.2rem;">注册</el-button>
-            </el-form-item>
+        <el-form-item prop="role_number">
+            <el-input v-model="registerForm.role_number" placeholder="权限码(非必填)" prefix-icon="Bell" size="large" />
+        </el-form-item>
+        
+        <el-form-item  size="large">
+            <el-button type="primary" @click="register" :loading="isloading" style="width: 100%;font-size: 1.2rem;">注册</el-button>
+        </el-form-item>
 
-            <el-form-item  size="large">
-                <el-button @click="$emit('toLogin')"  style="width: 100%;font-size: 1.2rem;">已有账号?去注册</el-button>
-            </el-form-item>
+        <el-form-item  size="large">
+            <el-button @click="$emit('toLogin')"  style="width: 100%;font-size: 1.2rem;">已有账号?去注册</el-button>
+        </el-form-item>
 
-        </el-form>
-    </div>
+    </el-form>
 
 </template>
 
@@ -134,7 +132,7 @@
                         'code':role_code(registerForm.role_number)
                     });
                     if(response){
-                        ElMessage.success("注册成功！三秒后跳转登录页。。。");
+                        ElMessage.success("注册成功！");
                         isloading.value = false;
                         user.setToken(response.tokeninfo.access_token)
                         user.setUserInfo(response.data)

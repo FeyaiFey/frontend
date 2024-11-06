@@ -1,10 +1,10 @@
 import 'vue/jsx'
 
-import 'virtual:windi.css'
-import 'animate.css'
-// 引入全局样式
-import '@/styles/index.less'
+// 引入windi css
+import '@/plugins/unocss'
 
+// 导入全局的svg图标
+import '@/plugins/svgIcon'
 
 
 // 引入状态管理
@@ -14,10 +14,7 @@ import { setupStore } from '@/stores'
 import { setupGlobCom } from '@/components'
 
 // 引入element-plus
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+import { setupElementPlus } from '@/plugins/elementPlus'
 
 // 引入全局样式
 import '@/styles/index.less'
@@ -41,15 +38,11 @@ import './permission'
 const setupAll = async () => {
   const app = createApp(App)
 
-  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-  }
-
-  await app.use(ElementPlus)
-  
-  setupStore(app)
+  await setupStore(app)
 
   setupGlobCom(app)
+
+  setupElementPlus(app)
 
   setupRouter(app)
 

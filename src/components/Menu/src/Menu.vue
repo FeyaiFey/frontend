@@ -8,7 +8,6 @@ import { useRouter } from 'vue-router'
 import { isUrl } from '@/utils/is'
 import { useDesign } from '@/hooks/useDesign'
 
-type LayoutType = 'classic' | 'topLeft' | 'top' | 'cutMenu'
 
 const { getPrefixCls } = useDesign()
 

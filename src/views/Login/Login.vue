@@ -40,7 +40,7 @@ const themeChange = () => {
             <div class="relative flex mx-auto min-h-100vh"> 
                 <div :class="`${prefixCls}__left flex-1 bg-gray-500 bg-opacity-20 relative p-30px lt-xl:hidden`">
                     <div class="flex items-center relative text-white">
-                        <img src="@/assets/Logo/logo.png" alt="" w:w="48px" w:h="48px" w:mr="10px" />
+                        <img src="@/assets/Logo/logo.png" alt="" class="w-48px h-48px mr-10px" />
                         <span class="text-20px font-bold">苏州华芯微电子</span>
                     </div>
                     <div class="flex justify-center items-center h-[calc(100%-60px)]">

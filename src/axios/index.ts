@@ -2,10 +2,6 @@ import service from './service'
 import { useUserStore } from '@/stores/user'
 import type { RawAxiosRequestHeaders } from 'axios'
 
-type AxiosMethod = 'get' | 'post' | 'delete' | 'put'
-
-type AxiosResponseType = 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream'
-
 
 interface AxiosConfig {
     params?: any

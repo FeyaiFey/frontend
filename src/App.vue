@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useAppStore } from '@/stores/app'
+import { ConfigGlobal } from '@/components/ConfigGlobal'
 import { useDesign } from '@/hooks/useDesign'
 
 const { getPrefixCls } = useDesign()
@@ -14,6 +15,7 @@ const greyMode = computed(() => appStore.getGreyMode)
 const currentSize = computed(() => appStore.getCurrentSize)
 
 appStore.initTheme()
+
 </script>
 
 <template>

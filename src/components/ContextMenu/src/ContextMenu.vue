@@ -5,8 +5,6 @@ import { useDesign } from '@/hooks/useDesign'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import type { ContextMenuSchema } from './types'
 
-type ComponentRef<T extends abstract new (...args: any) => any> = InstanceType<T>;
-
 const { getPrefixCls } = useDesign()
 
 const prefixCls = getPrefixCls('context-menu')

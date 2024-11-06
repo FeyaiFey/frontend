@@ -56,17 +56,17 @@ const toPage = (path: string) => {
       <ElDropdownMenu>
         <ElDropdownItem>
           <div @click="toPage('/personal/personal-center')">
-            {{ 'router.personalCenter' }}
+            {{ '个人中心' }}
           </div>
         </ElDropdownItem>
         <ElDropdownItem>
-          <div @click="toDocument">{{ 'common.document' }}</div>
+          <div @click="toDocument">{{ '项目文档' }}</div>
         </ElDropdownItem>
         <ElDropdownItem divided>
-          <div @click="lockScreen">{{ 'lock.lockScreen' }}</div>
+          <div @click="lockScreen">{{ '锁定屏幕' }}</div>
         </ElDropdownItem>
         <ElDropdownItem>
-          <div @click="loginOut">{{ 'common.loginOut' }}</div>
+          <div @click="loginOut">{{ '退出登录' }}</div>
         </ElDropdownItem>
       </ElDropdownMenu>
     </template>

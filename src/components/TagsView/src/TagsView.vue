@@ -14,9 +14,6 @@ import { useScrollTo } from '@/hooks/useScrollTo'
 import { useTagsView } from '@/hooks/useTagsView'
 import { cloneDeep } from 'lodash-es'
 
-type Nullable<T> = T | null
-  type ComponentRef<T extends abstract new (...args: any) => any> = InstanceType<T>;
-
 
 const { getPrefixCls } = useDesign()
 
@@ -295,7 +292,7 @@ watch(
             :schema="[
               {
                 icon: 'vi-ant-design:sync-outlined',
-                label: 'common.reload',
+                label: '重新加载',
                 disabled: selectedTag?.fullPath !== item.fullPath,
                 command: () => {
                   refreshSelectedTag(item)
@@ -303,7 +300,7 @@ watch(
               },
               {
                 icon: 'vi-ant-design:close-outlined',
-                label: 'common.closeTab',
+                label: '关闭标签页',
                 disabled: !!visitedViews?.length && selectedTag?.meta.affix,
                 command: () => {
                   closeSelectedTag(item)
@@ -312,7 +309,7 @@ watch(
               {
                 divided: true,
                 icon: 'vi-ant-design:vertical-right-outlined',
-                label: 'common.closeTheLeftTab',
+                label: '关闭左侧标签页',
                 disabled:
                   !!visitedViews?.length &&
                   (item.fullPath === visitedViews[0].fullPath ||
@@ -323,7 +320,7 @@ watch(
               },
               {
                 icon: 'vi-ant-design:vertical-left-outlined',
-                label: 'common.closeTheRightTab',
+                label: '关闭右侧标签页',
                 disabled:
                   !!visitedViews?.length &&
                   (item.fullPath === visitedViews[visitedViews.length - 1].fullPath ||
@@ -335,7 +332,7 @@ watch(
               {
                 divided: true,
                 icon: 'vi-ant-design:tag-outlined',
-                label: 'common.closeOther',
+                label: '关闭其他标签页',
                 disabled: selectedTag?.fullPath !== item.fullPath,
                 command: () => {
                   closeOthersTags()
@@ -343,7 +340,7 @@ watch(
               },
               {
                 icon: 'vi-ant-design:line-outlined',
-                label: 'common.closeAll',
+                label: '关闭全部标签页',
                 command: () => {
                   closeAllTags()
                 }
@@ -415,14 +412,14 @@ watch(
       :schema="[
         {
           icon: 'vi-ant-design:sync-outlined',
-          label: 'common.reload',
+          label: '重新加载',
           command: () => {
             refreshSelectedTag(selectedTag)
           }
         },
         {
           icon: 'vi-ant-design:close-outlined',
-          label: 'common.closeTab',
+          label: '关闭标签页',
           disabled: !!visitedViews?.length && selectedTag?.meta.affix,
           command: () => {
             closeSelectedTag(selectedTag!)
@@ -431,7 +428,7 @@ watch(
         {
           divided: true,
           icon: 'vi-ant-design:vertical-right-outlined',
-          label: 'common.closeTheLeftTab',
+          label: '关闭左侧标签页',
           disabled: !!visitedViews?.length && selectedTag?.fullPath === visitedViews[0].fullPath,
           command: () => {
             closeLeftTags()
@@ -439,7 +436,7 @@ watch(
         },
         {
           icon: 'vi-ant-design:vertical-left-outlined',
-          label: 'common.closeTheRightTab',
+          label: '关闭右侧标签页',
           disabled:
             !!visitedViews?.length &&
             selectedTag?.fullPath === visitedViews[visitedViews.length - 1].fullPath,
@@ -450,14 +447,14 @@ watch(
         {
           divided: true,
           icon: 'vi-ant-design:tag-outlined',
-          label: 'common.closeOther',
+          label: '关闭其他标签页',
           command: () => {
             closeOthersTags()
           }
         },
         {
           icon: 'vi-ant-design:line-outlined',
-          label: 'common.closeAll',
+          label: '关闭全部标签页',
           command: () => {
             closeAllTags()
           }

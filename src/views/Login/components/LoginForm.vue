@@ -1,36 +1,33 @@
 <template>
-    <div w:w="lg:400px md:4/5 sm:11/12">
-        <el-form :model="loginForm" ref="loginFormRef" :rules="rules" size="large">
-            <h1 style="width: 100%;text-align: center;margin-bottom: 30px;font-size: 2rem;font-weight: bolder;">登录</h1>
-  
-            <el-form-item prop="email">
-                <el-input v-model="loginForm.email" placeholder="邮箱账号" prefix-icon="Message" size="large"/>
+    <el-form :model="loginForm" ref="loginFormRef" :rules="rules" class="dark:(border-1 border-[var(--el-border-color)] border-solid) w-[100%]">
+        <h1 style="width: 100%;text-align: center;margin-bottom: 30px;font-size: 2rem;font-weight: bolder;">登录</h1>
+
+        <el-form-item prop="email">
+            <el-input v-model="loginForm.email" placeholder="邮箱账号" prefix-icon="Message" size="large"/>
+        </el-form-item>
+
+        <el-form-item prop="password">
+            <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" prefix-icon="Lock" show-password size="large" />
+        </el-form-item>
+
+        <div class="func" >
+            <el-form-item>
+                <el-checkbox v-model='rememberMe'>记住我</el-checkbox>
             </el-form-item>
-  
-            <el-form-item prop="password">
-                <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" prefix-icon="Lock" show-password size="large" />
+
+            <el-form-item>
+                <el-link>忘记密码</el-link>
             </el-form-item>
-  
-            <div class="func" >
-                <el-form-item>
-                    <el-checkbox v-model='rememberMe'>记住我</el-checkbox>
-                </el-form-item>
-  
-                <el-form-item>
-                    <el-link>忘记密码</el-link>
-                </el-form-item>
-            </div>
-            
-            <el-form-item  size="large">
-                <el-button type="primary" @click="login" :loading="isloading" style="width: 100%;font-size: 1.2rem;">登录</el-button>
-            </el-form-item>
-  
-            <el-form-item  size="large">
-                <el-button @click="$emit('toRegister')" style="width: 100%;font-size: 1.2rem;">注册</el-button>
-            </el-form-item>
-  
-        </el-form>
-    </div>
+        </div>
+        
+        <el-form-item  size="large">
+            <el-button type="primary" @click="login" :loading="isloading" style="width: 100%;font-size: 1.2rem;">登录</el-button>
+        </el-form-item>
+
+        <el-form-item  size="large">
+            <el-button @click="$emit('toRegister')" style="width: 100%;font-size: 1.2rem;">注册</el-button>
+        </el-form-item>
+    </el-form>
   
   </template>
 
@@ -43,7 +40,6 @@
     import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
     import { loginApi,getRouteApi } from '@/api/login';
     import { usePermissionStore } from '@/stores/permission';
-
 
     const user = useUserStore()
     const permissionStore = usePermissionStore()

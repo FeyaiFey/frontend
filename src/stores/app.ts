@@ -6,29 +6,6 @@ import { useCssVar } from '@vueuse/core'
 import { unref } from 'vue'
 import { useDark } from '@vueuse/core'
 
-
-
-interface ThemeTypes {
-    elColorPrimary?: string
-    leftMenuBorderColor?: string
-    leftMenuBgColor?: string
-    leftMenuBgLightColor?: string
-    leftMenuBgActiveColor?: string
-    leftMenuCollapseBgActiveColor?: string
-    leftMenuTextColor?: string
-    leftMenuTextActiveColor?: string
-    logoTitleTextColor?: string
-    logoBorderColor?: string
-    topHeaderBgColor?: string
-    topHeaderTextColor?: string
-    topHeaderHoverColor?: string
-    topToolBorderColor?: string
-  }
-
-type LayoutType = 'classic' | 'topLeft' | 'top' | 'cutMenu'
-
-type Recordable<T = any, K extends string | number | symbol = string> = Record<K extends null | undefined ? string : K, T>
-
 interface AppState {
   breadcrumb: boolean
   breadcrumbIcon: boolean

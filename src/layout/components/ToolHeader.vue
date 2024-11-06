@@ -29,9 +29,6 @@ const size = computed(() => appStore.getSize)
 // 布局
 const layout = computed(() => appStore.getLayout)
 
-// 多语言图标
-const locale = computed(() => appStore.getLocale)
-
 export default defineComponent({
   name: 'ToolHeader',
   setup() {

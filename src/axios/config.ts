@@ -3,8 +3,6 @@ import { ElMessage } from 'element-plus'
 import qs from 'qs'
 import { useUserStore } from '@/stores/user'
 
-type Recordable<T = any, K extends string | number | symbol = string> = Record<K extends null | undefined ? string : K, T>;
-
 function objToFormData(obj: Recordable) {
     const formData = new FormData()
     Object.keys(obj).forEach((key) => {

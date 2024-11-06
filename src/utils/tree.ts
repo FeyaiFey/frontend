@@ -1,8 +1,3 @@
-interface Fn<T = any> {
-  (...arg: T[]): T
-}
-
-
 interface TreeHelperConfig {
   id: string
   children: string

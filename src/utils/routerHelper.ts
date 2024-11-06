@@ -5,51 +5,8 @@ import type {
   RouteRecordNormalized,
   RouteRecordRaw
 } from 'vue-router'
-import { defineComponent } from 'vue'
 import { isUrl } from '@/utils/is'
 import { omit, cloneDeep } from 'lodash-es'
-
-type Nullable<T> = T | null
-
-type Component<T = any> =
-  | ReturnType<typeof defineComponent>
-  | (() => Promise<typeof import('*.vue')>)
-  | (() => Promise<T>)
-
-type Recordable<T = any, K extends string | number | symbol = string> = Record<K extends null | undefined ? string : K, T>
-
-interface RouteMetaCustom extends Record<string | number | symbol, unknown> {
-    hidden?: boolean
-    alwaysShow?: boolean
-    title?: string
-    icon?: string
-    noCache?: boolean
-    breadcrumb?: boolean
-    affix?: boolean
-    activeMenu?: string
-    noTagsView?: boolean
-    canTo?: boolean
-    permission?: string[]
-  }
-
-interface AppCustomRouteRecordRaw
-    extends Omit<RouteRecordRaw, 'meta' | 'component' | 'children'> {
-    name: string
-    meta: RouteMetaCustom
-    component: string
-    path: string
-    redirect: string
-    children?: AppCustomRouteRecordRaw[]
-  }
-
-interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'children'> {
-    name: string
-    meta: RouteMetaCustom
-    component?: Component | string
-    children?: AppRouteRecordRaw[]
-    props?: Recordable
-    fullPath?: string
-}
 
 const modules = import.meta.glob('../views/**/*.{vue,tsx}')
 
