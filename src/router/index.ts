@@ -60,7 +60,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: 'assy',
     meta: {
       title: '封装',
-      icon: 'vi-ant-design:dashboard-filled',
+      icon: 'vi-mdi:assembly',
       alwaysShow: true
     },
     children: [
@@ -71,15 +71,48 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '封装历史记录',
           noCache: true,
-          affix: true
+          affix: true,
+          icon: 'vi-mdi:clipboard-text-history',
         }
       },
       {
         path: 'test',
-        component: () => import('@/views/AssyHistory/AssyHistory.vue'),
+        component: () => import('@/views/AssyHistory/Test.vue'),
         name: 'test',
         meta: {
           title: '测试',
+          icon: 'vi-ant-design:dashboard-filled',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/files',
+    component: Layout,
+    name: 'files',
+    meta: {
+      title: '对外文件',
+      icon: 'vi-ant-design:dashboard-filled'
+    },
+    children: [
+      {
+        path: 'bonding',
+        component: () => import('@/views/FileBrowser/FileBrowser.vue'),
+        name: 'bonding_file',
+        meta: {
+          title: '键合图',
+          noCache: true,
+          icon: 'vi-ant-design:dashboard-filled',
+        }
+      },
+      {
+        path: 'wire',
+        component: () => import('@/views/FileBrowser/FileBrowser.vue'),
+        name: 'wire_files',
+        meta: {
+          title: '打线图',
+          icon: 'vi-ant-design:dashboard-filled',
           noCache: true
         }
       }

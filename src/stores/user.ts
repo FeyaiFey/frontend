@@ -69,7 +69,8 @@ export const useUserStore = defineStore('user', {
       this.setToken("")
       this.setUserInfo(undefined)
       this.setRoleRouters([])
-      this.setLoginInfo(undefined)
+      const emailContent = this.loginInfo?.email
+      this.setLoginInfo({email:emailContent,password:undefined})
       router.replace('/login')
     },
     logout() {
