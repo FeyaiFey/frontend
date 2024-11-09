@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Dialog } from '@/components/Dialog'
-import type { FormInstance, FormRules } from 'element-plus';
+import type { FormInstance } from 'element-plus';
 import { reactive, computed } from 'vue'
 import { useDesign } from '@/hooks/useDesign'
 import { useLockStore } from '@/stores/lock'
@@ -80,7 +80,7 @@ const handleLock = async () => {
       </el-form-item>
     </el-form>
     <template #footer>
-      <BaseButton type="primary" @click="handleLock">锁定</BaseButton>
+      <el-button type="primary" @click="handleLock">锁定</el-button> 
     </template>
   </Dialog>
 </template>

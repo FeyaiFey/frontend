@@ -1,13 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { App } from 'vue'
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw,RouteLocationNormalized } from 'vue-router'
 import { Layout } from '@/utils/routerHelper'
 
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/assy/assyhistory',
+    redirect: '/index', // '/assy/assyhistory'
     name: 'Root',
     meta: {
       hidden: true
@@ -54,6 +54,25 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
 
 export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
+    path:'/',
+    component:Layout,
+    name:'index',
+    meta:{},
+    children:[
+      {
+        path:'index',
+        component: () => import('@/views/Welcome/Welcome.vue'),
+        name:'welcome',
+        meta:{
+          title:'概况',
+          noCache:true,
+          affix: false,
+          icon:'vi-mdi:human-welcome'
+        }
+      }
+    ]
+  },
+  {
     path: '/assy',
     component: Layout,
     redirect: '/assy/assyhistory',
@@ -71,7 +90,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '封装历史记录',
           noCache: true,
-          affix: true,
+          affix: true,  // 固定tagview
           icon: 'vi-mdi:clipboard-text-history',
         }
       },
@@ -81,7 +100,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'test',
         meta: {
           title: '测试',
-          icon: 'vi-ant-design:dashboard-filled',
+          icon: 'vi-fluent:laser-tool-20-filled',
           noCache: true
         }
       }
@@ -93,7 +112,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: 'files',
     meta: {
       title: '对外文件',
-      icon: 'vi-ant-design:dashboard-filled'
+      icon: 'vi-solar:folder-with-files-bold'
     },
     children: [
       {
@@ -103,8 +122,20 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '键合图',
           noCache: true,
-          icon: 'vi-ant-design:dashboard-filled',
+          icon: 'vi-icon-park-solid:chip',
         }
+      },
+      {
+        // 动态路由：匹配文件名参数
+        path: 'bonding/:filename',
+        component: () => import('@/views/FileBrowser/components/FilePreview.vue'),  // 预览文件的组件
+        name: 'bonding_file_preview',
+        meta: {
+          title: '键合图预览',
+          noCache: true,
+          hidden: true,  // 可选：隐藏此路由在侧边栏的显示
+        },
+        props: (route:RouteLocationNormalized) => ({ file_name: route.params.filename }) // 将路由参数作为组件的 props 传入
       },
       {
         path: 'wire',
@@ -112,7 +143,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'wire_files',
         meta: {
           title: '打线图',
-          icon: 'vi-ant-design:dashboard-filled',
+          icon: 'vi-arcticons:chipdefense',
           noCache: true
         }
       }

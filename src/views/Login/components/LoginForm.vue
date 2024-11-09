@@ -143,6 +143,7 @@
                       user.setUserInfo(response.data)
                     }else {
                       user.reset()
+                      user.setToken(response.tokeninfo.access_token)
                     }
                     
                     getRole()

@@ -38,3 +38,7 @@ export const getRouteApi = (params: RoleParams): Promise<IResponse> => {
 export const loginOutApi = (): Promise<IResponse> => {
   return request.get({ url: '/auth/logout'})
 }
+
+export const authApi = ():Promise<IResponse> => {
+  return request.get({ url: '/users/me'})
+}

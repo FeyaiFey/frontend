@@ -17,6 +17,6 @@ const title = computed(() => appStore.getTitle)
     :class="prefixCls"
     class="text-center text-[var(--el-text-color-placeholder)] bg-[var(--app-content-bg-color)] h-[var(--app-footer-height)] leading-[var(--app-footer-height)] dark:bg-[var(--el-bg-color)] overflow-hidden"
   >
-    Copyright ©2021-present FeyFey
+    Copyright ©2024-present FeyFey
   </div>
 </template>

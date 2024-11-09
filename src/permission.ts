@@ -1,5 +1,4 @@
 import router from './router'
-import { defineComponent } from 'vue'
 import { useAppStore } from '@/stores/app'
 import type { RouteRecordRaw } from 'vue-router'
 import { useTitle } from '@/hooks/useTitle'
@@ -8,47 +7,8 @@ import { usePermissionStore } from '@/stores/permission'
 import { usePageLoading } from '@/hooks/usePageLoading'
 import { NO_REDIRECT_WHITE_LIST } from '@/constants'
 import { useUserStore } from '@/stores/user'
-import { useTagsViewStore } from './stores/tagsView'
+import { authApi } from './api/login'
 
-type Component<T = any> =
-  | ReturnType<typeof defineComponent>
-  | (() => Promise<typeof import('*.vue')>)
-  | (() => Promise<T>)
-
-type Recordable<T = any, K extends string | number | symbol = string> = Record<K extends null | undefined ? string : K, T>
-
-interface RouteMetaCustom extends Record<string | number | symbol, unknown> {
-    hidden?: boolean
-    alwaysShow?: boolean
-    title?: string
-    icon?: string
-    noCache?: boolean
-    breadcrumb?: boolean
-    affix?: boolean
-    activeMenu?: string
-    noTagsView?: boolean
-    canTo?: boolean
-    permission?: string[]
-  }
-
-interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'children'> {
-    name: string
-    meta: RouteMetaCustom
-    component?: Component | string
-    children?: AppRouteRecordRaw[]
-    props?: Recordable
-    fullPath?: string
-}
-
-interface AppCustomRouteRecordRaw
-    extends Omit<RouteRecordRaw, 'meta' | 'component' | 'children'> {
-    name: string
-    meta: RouteMetaCustom
-    component: string
-    path: string
-    redirect: string
-    children?: AppCustomRouteRecordRaw[]
-  }
 
 export interface PermissionState {
     routers: AppRouteRecordRaw[]
@@ -75,6 +35,23 @@ router.beforeEach(async (to, from, next) => {
         next()
         return
       }
+
+      // **向后端验证token的逻辑**
+      try{
+        const res = await authApi()
+        // 如果验证失败，重定向到登录页
+        if (!res.data) {
+          userStore.logout()
+          next(`/login?redirect=${to.path}`)
+          return
+        }
+      }catch(error){
+        userStore.logout()
+        console.error('Token 验证失败:', error)
+        next(`/login?redirect=${to.path}`)
+        return
+      }
+      
       // 开发者可根据实际情况进行修改
       const roleRouters = userStore.getRoleRouters || []
 

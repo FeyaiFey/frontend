@@ -104,7 +104,7 @@ function handleShowForm(show = false) {
             锁屏密码错误
           </span>
           <div :class="`${prefixCls}-entry__footer enter-x`">
-            <BaseButton
+            <el-button
               type="primary"
               size="small"
               class="mt-2 mr-2 enter-x"
@@ -113,8 +113,8 @@ function handleShowForm(show = false) {
               @click="handleShowForm(true)"
             >
               返回
-            </BaseButton>
-            <BaseButton
+            </el-button>
+            <el-button
               type="primary"
               size="small"
               class="mt-2 mr-2 enter-x"
@@ -123,8 +123,8 @@ function handleShowForm(show = false) {
               @click="goLogin"
             >
               返回登录
-            </BaseButton>
-            <BaseButton
+            </el-button>
+            <el-button
               type="primary"
               class="mt-2"
               size="small"
@@ -133,7 +133,7 @@ function handleShowForm(show = false) {
               :disabled="loading"
             >
               进入系统
-            </BaseButton>
+            </el-button>
           </div>
         </div>
       </div>
