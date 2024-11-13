@@ -110,41 +110,16 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     path: '/files',
     component: Layout,
     name: 'files',
-    meta: {
-      title: '对外文件',
-      icon: 'vi-solar:folder-with-files-bold'
-    },
+    meta: {},
     children: [
       {
-        path: 'bonding',
+        path: 'index',
         component: () => import('@/views/FileBrowser/FileBrowser.vue'),
-        name: 'bonding_file',
+        name: 'files',
         meta: {
-          title: '键合图',
+          title: '文件流',
           noCache: true,
           icon: 'vi-icon-park-solid:chip',
-        }
-      },
-      {
-        // 动态路由：匹配文件名参数
-        path: 'bonding/:filename',
-        component: () => import('@/views/FileBrowser/components/FilePreview.vue'),  // 预览文件的组件
-        name: 'bonding_file_preview',
-        meta: {
-          title: '键合图预览',
-          noCache: true,
-          hidden: true,  // 可选：隐藏此路由在侧边栏的显示
-        },
-        props: (route:RouteLocationNormalized) => ({ file_name: route.params.filename }) // 将路由参数作为组件的 props 传入
-      },
-      {
-        path: 'wire',
-        component: () => import('@/views/FileBrowser/FileBrowser.vue'),
-        name: 'wire_files',
-        meta: {
-          title: '打线图',
-          icon: 'vi-arcticons:chipdefense',
-          noCache: true
         }
       }
     ]
