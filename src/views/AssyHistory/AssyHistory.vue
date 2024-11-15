@@ -20,7 +20,7 @@ const queryForm = reactive({
 
 const loading = ref(false)
 const assyHistoryData = ref([])
-const totalPage = ref()
+const totalPage = ref(0)
 const pagesize = ref(15)
 const currentPage = ref(1)
 
@@ -50,7 +50,7 @@ const queryHistories = async ()=>{
     })
     currentPage.value = 1
     assyHistoryData.value = res.data
-    totalPage.value = res.total
+    totalPage.value = res.total as number;
     loading.value = false
 }
 
@@ -83,7 +83,7 @@ const handleCurrentChange = async (cp = currentPage.value) =>{
     //     params:{page:cp,page_size:pagesize.value}
     // });
     assyHistoryData.value = res.data;
-    totalPage.value = res.total;
+    totalPage.value = res.total as number;;
     currentPage.value = cp
     loading.value = false
 }
@@ -103,7 +103,7 @@ const handleSizeChange = async (ps = pagesize.value) =>{
     //     params:{page:1,page_size:ps}
     // });
     assyHistoryData.value = res.data;
-    totalPage.value = res.total;
+    totalPage.value = res.total as number;;
     pagesize.value = ps
     currentPage.value = 1
     loading.value = false
@@ -192,7 +192,7 @@ const handleSizeChange = async (ps = pagesize.value) =>{
                     :page-sizes="[15, 20, 30, 40, 50]"
                     size="default"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="totalPage"
+                    :total='totalPage'
                     :background=true
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange" />
