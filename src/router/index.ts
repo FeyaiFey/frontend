@@ -7,7 +7,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/index', // '/assy/assyhistory'
+    redirect: '/assy/assyhistory', // '/assy/assyhistory'
     name: 'Root',
     meta: {
       hidden: true
@@ -66,7 +66,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta:{
           title:'概况',
           noCache:true,
-          affix: false,
+          affix: true,
           icon:'vi-mdi:human-welcome'
         }
       }
@@ -90,7 +90,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '封装历史记录',
           noCache: true,
-          affix: true,  // 固定tagview
+          affix: false,  // 固定tagview
           icon: 'vi-mdi:clipboard-text-history',
         }
       },
@@ -99,7 +99,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/AssyHistory/Test.vue'),
         name: 'test',
         meta: {
-          title: '测试',
+          title: '中测记录',
           icon: 'vi-fluent:laser-tool-20-filled',
           noCache: true
         }
@@ -117,13 +117,13 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/FileBrowser/FileBrowser.vue'),
         name: 'files',
         meta: {
-          title: '文件流',
+          title: '图纸文档',
           noCache: true,
-          icon: 'vi-icon-park-solid:chip',
+          icon: 'vi-vaadin:open-book',
         }
       }
     ]
-  },
+  }
 ]
 
 const router = createRouter({

@@ -9,10 +9,10 @@ export const filesApi = (params?:any): Promise<IResponse> => {
 }
 
 export const filesPreviewApi = (params?:any): Promise<IResponse> => {
-  return request.get({ url: `files/${params.path}`,params})
+  return request.get({ url: 'files/preview',params,responseType:'blob'})
 }
 
 
 export const filesDownloadApi = (params?:any): Promise<IResponse> => {
-  return request.get({ url: 'files/download',params})
+  return request.get({ url: 'files/download',params,responseType:'blob'})
 }

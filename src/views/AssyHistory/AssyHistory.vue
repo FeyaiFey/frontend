@@ -54,6 +54,17 @@ const queryHistories = async ()=>{
     loading.value = false
 }
 
+const queryReset = () => {
+    queryForm.item_name =''
+    queryForm.wafer_name='',
+    queryForm.wafer_lot='',
+    queryForm.print_lot='',
+    queryForm.package='',
+    queryForm.supply='',
+    queryForm.order_date_start='',
+    queryForm.order_date_end=''
+}
+
 
 
 const handleCurrentChange = async (cp = currentPage.value) =>{
@@ -150,7 +161,10 @@ const handleSizeChange = async (ps = pagesize.value) =>{
 
 
                 <el-form-item>
-                    <el-button type="primary" @click="queryHistories" style="width: 200px;">查询</el-button>
+                    <el-button type="primary" @click="queryHistories" style="width: 150px;">查询</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="queryReset" style="width: 150px;">重置</el-button>
                 </el-form-item>
             </el-form>
         </div>
