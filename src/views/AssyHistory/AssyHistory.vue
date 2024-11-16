@@ -175,9 +175,10 @@ const handleSizeChange = async (ps = pagesize.value) =>{
                 <el-table-column prop="ID" label="序号" width="80" align="center"/>
                 <el-table-column prop="ORDER_ID" label="订单号" width="130" sortable align="center" />
                 <el-table-column prop="ITEM_NAME" label="芯片名称" width="150"  />
+                <el-table-column prop="PACKAGE" label="封装形式" width="100" show-overflow-tooltip />
+                <el-table-column prop="PRINT_LOT" label="打印批号" width="200" />
                 <el-table-column prop="WAFER_NAME" label="晶圆名称" width="120" show-overflow-tooltip/>
                 <el-table-column prop="WAFER_LOT" label="晶圆批号" width="150" show-overflow-tooltip />
-                <el-table-column prop="PRINT_LOT" label="打印批号" width="200" />
                 <el-table-column prop="REMARK" label="备注" width="auto" show-overflow-tooltip/>
                 <el-table-column prop="BOUNDING" label="打线图号" width="150" show-overflow-tooltip align="center"/>
                 <el-table-column prop="BUSINESS_QTY" label="装片数量" width="100" align="right" />
