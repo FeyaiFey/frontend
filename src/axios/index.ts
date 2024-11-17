@@ -1,22 +1,5 @@
 import service from './service'
 import { useUserStore } from '@/stores/user'
-import type { RawAxiosRequestHeaders } from 'axios'
-
-
-interface AxiosConfig {
-    params?: any
-    data?: any
-    url?: string
-    method?: AxiosMethod
-    headers?: RawAxiosRequestHeaders
-    responseType?: AxiosResponseType
-  }
-
-interface IResponse<T = any> {
-    code: number
-    data: T extends any ? T : T & any
-    total?:number
-}
 
 
 const request = (option: AxiosConfig) => {

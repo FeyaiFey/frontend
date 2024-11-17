@@ -7,7 +7,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/assy/assyhistory', // '/assy/assyhistory'
+    redirect: '/index', // '/assy/assyhistory'
     name: 'Root',
     meta: {
       hidden: true
@@ -73,33 +73,87 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     ]
   },
   {
-    path: '/assy',
+    path: '/wip',
     component: Layout,
-    redirect: '/assy/assyhistory',
-    name: 'assy',
+    redirect: '/wip/package',
+    name: 'process',
     meta: {
-      title: '封装',
-      icon: 'vi-mdi:assembly',
+      title: '进度查询',
+      icon: 'vi-tabler:percentage-66',
       alwaysShow: true
     },
     children: [
       {
-        path: 'assyhistory',
+        path: 'purchase',
+        component: () => import('@/views/AssyHistory/AssyHistory.vue'),
+        name: 'purchase',
+        meta: {
+          title: '采购在途',
+          noCache: true,
+          affix: false,  // 固定tagview
+          icon: 'vi-bxs:purchase-tag',
+        }
+      },
+      {
+        path: 'package',
+        component: () => import('@/views/AssyHistory/Test.vue'),
+        name: 'package',
+        meta: {
+          title: '委外封装',
+          icon: 'vi-mdi:assembly',
+          noCache: true
+        }
+      },
+      {
+        path: 'wafertest',
+        component: () => import('@/views/AssyHistory/Test.vue'),
+        name: 'wafertest',
+        meta: {
+          title: '委外中测',
+          icon: 'vi-gg:smartphone-chip',
+          noCache: true
+        }
+      },
+      {
+        path: 'mo',
+        component: () => import('@/views/AssyHistory/Test.vue'),
+        name: 'mo',
+        meta: {
+          title: '二次委外',
+          icon: 'vi-ic:twotone-reply-all',
+          noCache: true
+        }
+      },
+    ]
+  },
+  {
+    path: '/info',
+    component: Layout,
+    redirect: '/info/package',
+    name: 'package',
+    meta: {
+      title: '信息查询',
+      icon: 'vi-icon-park-solid:view-list',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'package',
         component: () => import('@/views/AssyHistory/AssyHistory.vue'),
         name: 'assyHistory',
         meta: {
-          title: '封装历史记录',
+          title: '封装信息',
           noCache: true,
           affix: false,  // 固定tagview
           icon: 'vi-mdi:clipboard-text-history',
         }
       },
       {
-        path: 'test',
+        path: 'wafertest',
         component: () => import('@/views/AssyHistory/Test.vue'),
         name: 'test',
         meta: {
-          title: '中测记录',
+          title: '中测信息',
           icon: 'vi-fluent:laser-tool-20-filled',
           noCache: true
         }

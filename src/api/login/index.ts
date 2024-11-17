@@ -16,13 +16,6 @@ interface RegisterType {
   code?:number | string
 }
 
-interface IResponse<T = any> {
-    code: number
-    data: T extends any ? T : T & any
-    total?:number
-    tokeninfo?:T extends any ? T : T & any
-}
-
 export const loginApi = (data: LoginType): Promise<IResponse> => {
   return request.post({ url: '/auth/login', data})
 }
