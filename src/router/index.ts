@@ -85,7 +85,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: 'purchase',
-        component: () => import('@/views/AssyHistory/AssyHistory.vue'),
+        component: () => import('@/views/Mo/PackageList.vue'),
         name: 'purchase',
         meta: {
           title: '采购在途',
@@ -96,7 +96,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       },
       {
         path: 'package',
-        component: () => import('@/views/AssyHistory/Test.vue'),
+        component: () => import('@/views/Mo/PackageList.vue'),
         name: 'package',
         meta: {
           title: '委外封装',
@@ -106,7 +106,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       },
       {
         path: 'wafertest',
-        component: () => import('@/views/AssyHistory/Test.vue'),
+        component: () => import('@/views/Mo/PackageList.vue'),
         name: 'wafertest',
         meta: {
           title: '委外中测',
@@ -116,7 +116,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       },
       {
         path: 'mo',
-        component: () => import('@/views/AssyHistory/Test.vue'),
+        component: () => import('@/views/Mo/PackageList.vue'),
         name: 'mo',
         meta: {
           title: '二次委外',
@@ -139,7 +139,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: 'package',
-        component: () => import('@/views/AssyHistory/AssyHistory.vue'),
+        component: () => import('@/views/Mo/PackageList.vue'),
         name: 'assyHistory',
         meta: {
           title: '封装信息',
@@ -150,7 +150,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       },
       {
         path: 'wafertest',
-        component: () => import('@/views/AssyHistory/Test.vue'),
+        component: () => import('@/views/Mo/PackageList.vue'),
         name: 'test',
         meta: {
           title: '中测信息',
