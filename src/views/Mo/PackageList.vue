@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref,reactive } from 'vue';
-import { packageListApi,bomListApi} from '@/api/mo';
+import { packageListApi,bomListApi,selectDownload,queryDownload} from '@/api/mo';
 
+interface TableRow {
+  id: number;  // 假设 id 是数字类型，如果是其他类型请修改
+  [key: string]: any;  // 其他字段，根据需要添加
+}
 
 function headerRowStyle(){
     return {backgroundColor: "#ddebf7", textAlign: "center",color:'black',fontSize:'15px'}
@@ -22,6 +26,8 @@ const assyHistoryData = ref([])
 const totalPage = ref(0)
 const pagesize = ref(15)
 const currentPage = ref(1)
+// 存储选中的行
+const selectedRows = ref<TableRow[]>([])
 
 function dateToString(date:any){
     if(date){
@@ -103,14 +109,60 @@ const handleSizeChange = async (ps = pagesize.value) =>{
         order_date_start:dateToString(queryForm.order_date_start),
         order_date_end:dateToString(queryForm.order_date_end),
         page:1,page_size:ps})
-    // const res = await axios.get('http://127.0.0.1:8000/test',{
-    //     params:{page:1,page_size:ps}
-    // });
     assyHistoryData.value = res.data;
     totalPage.value = res.total as number;
     pagesize.value = ps
     currentPage.value = 1
     loading.value = false
+}
+
+// 处理选择行变化
+const handleSelectionChange = (selection: TableRow[]) => {
+      selectedRows.value = selection;
+      console.log("选中行：", selectedRows.value);
+    };
+
+const handleSelectDownload = async () =>{
+    try{
+        const selectedIds = selectedRows.value.map((row) => row.id);
+        console.log("选中ID列表：", selectedIds);
+        const res = await selectDownload({ids: selectedIds.join(",")})
+        const url = window.URL.createObjectURL(new Blob([res.data],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })); // { type: 'text/csv' }
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download","packageList.xlsx"); // 设置下载文件名
+        document.body.appendChild(link);
+        link.click();
+        // 移除下载链接
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }  
+}
+
+const queryContentDownload = async () => {
+    try{
+        const res = await queryDownload({item_name:queryForm.item_name,
+                                         package:queryForm.package,
+                                         lot_code:queryForm.lot_code,
+                                         bonding:queryForm.bonding,
+                                         order_date_start:dateToString(queryForm.order_date_start),
+                                         order_date_end:dateToString(queryForm.order_date_end),
+                                         supply:queryForm.supply
+        })
+        const url = window.URL.createObjectURL(new Blob([res.data],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download","packageList.xlsx"); // 设置下载文件名 csv 改成 .csv
+        document.body.appendChild(link);
+        link.click();
+        // 移除下载链接
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }
 }
 
     
@@ -156,7 +208,7 @@ const handleSizeChange = async (ps = pagesize.value) =>{
                     />
                 </el-form-item>
 
-                <el-form-item label="封装厂">
+                <el-form-item label="封装厂商">
                     <el-input v-model="queryForm.supply" style="width: 150px;" clearable />
                 </el-form-item>
 
@@ -166,14 +218,27 @@ const handleSizeChange = async (ps = pagesize.value) =>{
                 <el-form-item>
                     <el-button type="primary" @click="queryReset" style="width: 150px;">重置</el-button>
                 </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="queryContentDownload" style="width: 150px;">导出查询内容</el-button>
+                </el-form-item>
             </el-form>
         </div>
-
-        <div>
+        <div style="position: relative;">
+            <!-- 下载按钮 -->
+            <el-button 
+                :disabled="selectedRows.length === 0"
+                style="position: absolute; top: -35px; right: 0; z-index: 1;" 
+                @click="handleSelectDownload">
+                <template #icon>
+                    <Icon icon="material-symbols-light:download" size="34" />
+                </template>
+            下载已选择
+            </el-button>
             <el-table 
                 :data="assyHistoryData" 
                 v-loading="loading" 
                 :header-cell-style="headerRowStyle" 
+                @selection-change="handleSelectionChange"
                 border 
                 lazy  
                 row-key="order_id"
@@ -259,6 +324,7 @@ const handleSizeChange = async (ps = pagesize.value) =>{
                         </div>
                     </template>
                 </el-table-column>
+                <el-table-column type="selection" width="50" align="center" />
                 <el-table-column prop="id" label="序号" width="80" align="center" sortable  />
                 <el-table-column prop="order_id" label="订单号" width="150" sortable align="center" show-overflow-tooltip />
                 <el-table-column prop="item_name" label="芯片名称" width="250" align="right" show-overflow-tooltip />
@@ -291,9 +357,7 @@ const handleSizeChange = async (ps = pagesize.value) =>{
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange" />
             </div>
-            
         </div>
-
     </div>
 </template>
 

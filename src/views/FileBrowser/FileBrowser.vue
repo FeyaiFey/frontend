@@ -131,9 +131,11 @@ const previewFile = async (row:any) => {
             // 打开新窗口并插入图片
             const imgWindow = window.open();
             if (imgWindow) {
+                imgWindow.document.title = fileName
                 const img = new Image();
                 img.src = url;
                 img.alt = "Image Preview";
+                img.style.width='100%'
                 
                 // 图片加载完成后再插入到文档中
                 img.onload = () => {

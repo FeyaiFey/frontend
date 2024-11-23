@@ -13,3 +13,11 @@ export const packageListApi = (params?: any): Promise<IResponse> => {
 export const bomListApi = (params?: any): Promise<IResponse> => {
     return request.get({ url: '/mo/package/bom', params})
 }
+
+export const selectDownload = (params?: any): Promise<IResponse> => {
+    return request.get({ url: '/mo/package/selectDownload', params,responseType:'blob'})
+}
+
+export const queryDownload = (params?: any): Promise<IResponse> => {
+    return request.get({ url: '/mo/package/queryDownload', params,responseType:'blob'})
+}
