@@ -8,4 +8,6 @@ export interface UserInfo {
     email:string
     username:string
     role_id:number
+    file_name:string
+    file_url:string
 }

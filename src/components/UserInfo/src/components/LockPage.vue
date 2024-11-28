@@ -5,11 +5,17 @@ import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
 import { useStorage } from '@/hooks/useStorage'
 import { useLockStore } from '@/stores/lock'
+import { useUserStore } from '@/stores/user'
 import { useNow } from '@/hooks/useNow'
 import { useDesign } from '@/hooks/useDesign'
 import { Icon } from '@/components/Icon'
 import { loginOutApi } from '@/api/login'
 import { useTagsViewStore } from '@/stores/tagsView'
+
+const userStore = useUserStore()
+
+const file_url = ref(userStore.getAvatarUrl)
+
 
 const tagsViewStore = useTagsViewStore()
 
@@ -91,7 +97,7 @@ function handleShowForm(show = false) {
       <div :class="`${prefixCls}-entry`" v-show="!showDate">
         <div :class="`${prefixCls}-entry-content`">
           <div class="flex flex-col items-center">
-            <img src="@/assets/imgs/avatar.jpg" alt="" class="w-70px h-70px rounded-[50%]" />
+            <img :src="file_url" alt="" class="w-70px h-70px rounded-[50%]" />
             <span class="text-14px my-10px text-[var(--logo-title-text-color)]">Archer</span>
           </div>
           <ElInput

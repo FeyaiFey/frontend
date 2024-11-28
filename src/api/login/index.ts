@@ -35,3 +35,16 @@ export const loginOutApi = (): Promise<IResponse> => {
 export const authApi = ():Promise<IResponse> => {
   return request.get({ url: '/users/me'})
 }
+
+// 获取头像api
+// export const getAvatarApi = (params?:any):Promise<IResponse> => {
+//   return request.get({ url: '/users/get-avatar',params})
+// }
+
+
+// 上传头像api
+export const saveAvatarApi = (data?:any):Promise<IResponse> => {
+  return request.post({ url: '/users/upload-avatar',data})
+}
+
+//

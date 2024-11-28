@@ -20,6 +20,8 @@ const { getPrefixCls } = useDesign()
 
 const prefixCls = getPrefixCls('user-info')
 
+const file_url = ref(userStore.getAvatarUrl)
+
 const loginOut = () => {
   userStore.logoutConfirm()
 }
@@ -32,7 +34,7 @@ const lockScreen = () => {
 }
 
 const toDocument = () => {
-  window.open('https://element-plus-admin-doc.cn/')
+  window.open('https://github.com/FeyaiFey/frontend.git')
 }
 
 const toPage = (path: string) => {
@@ -44,29 +46,25 @@ const toPage = (path: string) => {
   <ElDropdown class="custom-hover" :class="prefixCls" trigger="click">
     <div class="flex items-center">
       <img
-        src="@/assets/imgs/avatar.jpg"
-        alt=""
+        :src="file_url"
+        alt="Avatar"
         class="w-[calc(var(--logo-height)-25px)] rounded-[50%]"
       />
-      <span class="<lg:hidden text-14px pl-[5px] text-[var(--top-header-text-color)]">{{
-        userStore.getUserInfo?.username
-      }}</span>
+      <span class="<lg:hidden text-14px pl-[5px] text-[var(--top-header-text-color)]">{{ userStore.getUserInfo?.username }}</span>
     </div>
     <template #dropdown>
       <ElDropdownMenu>
         <ElDropdownItem>
-          <div @click="toPage('/personal/personal-center')">
-            {{ '个人中心' }}
-          </div>
+          <div @click="toPage('/personal/personal-center')">个人中心</div>
         </ElDropdownItem>
         <ElDropdownItem>
-          <div @click="toDocument">{{ '项目文档' }}</div>
+          <div @click="toDocument">项目文档</div>
         </ElDropdownItem>
         <ElDropdownItem divided>
-          <div @click="lockScreen">{{ '锁定屏幕' }}</div>
+          <div @click="lockScreen">锁定屏幕</div>
         </ElDropdownItem>
         <ElDropdownItem>
-          <div @click="loginOut">{{ '退出登录' }}</div>
+          <div @click="loginOut">退出登录</div>
         </ElDropdownItem>
       </ElDropdownMenu>
     </template>

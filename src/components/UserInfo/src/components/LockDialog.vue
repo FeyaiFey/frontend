@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref,reactive,computed } from 'vue'
 import { Dialog } from '@/components/Dialog'
-import type { FormInstance } from 'element-plus';
-import { reactive, computed } from 'vue'
+import type { FormInstance } from 'element-plus'
 import { useDesign } from '@/hooks/useDesign'
 import { useLockStore } from '@/stores/lock'
-import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
 
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('lock-dialog')
@@ -17,6 +19,10 @@ const props = defineProps({
     type: Boolean
   }
 })
+
+
+const file_url = ref(userStore.getAvatarUrl)
+
 
 const lockFormRef = ref<FormInstance>();
 const lockForm = reactive({password:""});
@@ -71,7 +77,7 @@ const handleLock = async () => {
     :title="dialogTitle"
   >
     <div class="flex flex-col items-center">
-      <img src="@/assets/imgs/avatar.jpg" alt="" class="w-70px h-70px rounded-[50%]" />
+      <img :src="file_url" alt="Avatar" class="w-70px h-70px rounded-[50%]" />
       <span class="text-14px my-10px text-[var(--top-header-text-color)]">Archer</span>
     </div>
     <el-form :model="lockForm" ref="lockFormRef">

@@ -41,6 +41,29 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     }
   },
   {
+    path: '/personal',
+    component: Layout,
+    redirect: '/personal/personal-center',
+    name: 'Personal',
+    meta: {
+      title: "我",
+      hidden: true,
+      canTo: true
+    },
+    children: [
+      {
+        path: 'personal-center',
+        component: () => import('@/views/Personal/PersonalCenter/PersonalCenter.vue'),
+        name: 'PersonalCenter',
+        meta: {
+          title: '个人中心',
+          hidden: true,
+          canTo: true
+        }
+      }
+    ]
+  },
+  {
     path: '/404',
     component: () => import('@/views/Error/404.vue'),
     name: 'NoFind',
@@ -73,6 +96,41 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/report',
+    component: Layout,
+    redirect: '/report/sop',
+    name: 'report',
+    meta: {
+      title: '报表',
+      icon: 'vi-iconoir:reports',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'sop',
+        component: () => import('@/views/Report/Cooperate.vue'),
+        name: 'sop',
+        meta: {
+          title: '产销协调',
+          noCache: true,
+          affix: false,  // 固定tagview
+          icon: 'vi-tdesign:cooperate-filled',
+        }
+      },
+      {
+        path: 'purchase',
+        component: () => import('@/views/Report/Purchase.vue'),
+        name: 'purchase_bi',
+        meta: {
+          title: '采购BI',
+          noCache: true,
+          affix: false,  // 固定tagview
+          icon: 'vi-carbon:purchase',
+        }
+      },
+    ]
+  },
+  {
     path: '/wip',
     component: Layout,
     redirect: '/wip/package',
@@ -86,7 +144,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       {
         path: 'purchase',
         component: () => import('@/views/Mo/PackageList.vue'),
-        name: 'purchase',
+        name: 'purchase_wip',
         meta: {
           title: '采购在途',
           noCache: true,
@@ -97,7 +155,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       {
         path: 'package',
         component: () => import('@/views/Mo/PackageList.vue'),
-        name: 'package',
+        name: 'package_wip',
         meta: {
           title: '委外封装',
           icon: 'vi-mdi:assembly',
@@ -107,7 +165,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       {
         path: 'wafertest',
         component: () => import('@/views/Mo/PackageList.vue'),
-        name: 'wafertest',
+        name: 'wafertest_wip',
         meta: {
           title: '委外中测',
           icon: 'vi-gg:smartphone-chip',
@@ -117,7 +175,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       {
         path: 'mo',
         component: () => import('@/views/Mo/PackageList.vue'),
-        name: 'mo',
+        name: 'mo_wip',
         meta: {
           title: '二次委外',
           icon: 'vi-ic:twotone-reply-all',
@@ -130,7 +188,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     path: '/info',
     component: Layout,
     redirect: '/info/package',
-    name: 'package',
+    name: 'package_info',
     meta: {
       title: '信息查询',
       icon: 'vi-icon-park-solid:view-list',
@@ -140,21 +198,41 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       {
         path: 'package',
         component: () => import('@/views/Mo/PackageList.vue'),
-        name: 'assyHistory',
+        name: 'assyHistory_info',
         meta: {
           title: '封装信息',
           noCache: true,
           affix: false,  // 固定tagview
-          icon: 'vi-mdi:clipboard-text-history',
+          icon: 'vi-eos-icons:hardware-circuit',
         }
       },
       {
         path: 'wafertest',
         component: () => import('@/views/Mo/PackageList.vue'),
-        name: 'test',
+        name: 'test_info',
         meta: {
           title: '中测信息',
           icon: 'vi-fluent:laser-tool-20-filled',
+          noCache: true
+        }
+      },
+      {
+        path: 'receipt',
+        component: () => import('@/views/Mo/Receipt.vue'),
+        name: 'receipt_info',
+        meta: {
+          title: '入库信息',
+          icon: 'vi-material-symbols:warehouse',
+          noCache: true
+        }
+      },
+      {
+        path: 'stock',
+        component: () => import('@/views/Mo/Receipt.vue'),
+        name: 'stock_info',
+        meta: {
+          title: '库存信息',
+          icon: 'vi-vaadin:stock',
           noCache: true
         }
       }

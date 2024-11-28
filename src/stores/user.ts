@@ -40,6 +40,9 @@ export const useUserStore = defineStore('user', {
     getRoleRouters():string[] | AppCustomRouteRecordRaw[] | undefined {
       return this.roleRouters
     },
+    getAvatarUrl():string| undefined{
+      return this.userInfo?.file_url
+    },
   },
   actions:{          // 设置状态的方法 类似 function
     setTokenKey(tokenKey: string) {
@@ -87,7 +90,7 @@ export const useUserStore = defineStore('user', {
           }
         )
         .catch(() => {})
-    },
+    }
   },
   persist:true
 })
