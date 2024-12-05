@@ -161,28 +161,28 @@ onMounted( async ()=>{
                     <template #default>
                         <div :class="`${prefixCls}__item flex justify-between`">
                             <div>
-                                <div :class="`${prefixCls}__item--icon ${prefixCls}__item--price p-16px inline-block rounded-6px`">
-                                    <Icon icon="ion:pricetag-sharp" :size="50"/>
+                                <div :class="`${prefixCls}__item--icon ${prefixCls}__item--peoples p-16px inline-block rounded-6px`">
+                                    <Icon icon="typcn:shopping-cart" :size="50"/>
                                 </div>
                             </div>
                             <div class="flex flex-col justify-between">
-                                <div :class="`${prefixCls}__item--text text-20px text-gray-500 text-right`">平均单价</div>
+                                <div :class="`${prefixCls}__item--text text-20px text-gray-500 text-right`">本月采购(PCS)</div>
                                 <CountTo
                                     class="text-20px font-700 text-right"
                                     :start-val="0"
-                                    :end-val="purchase_avg_price"
+                                    :end-val="purchase_qty"
                                     :duration="1500"
                                     />
                                 <div :class="`${prefixCls}__item--text text-13px text-gray-500 text-right`">
                                     <span>相比上月</span>
-                                    <span class="green" v-if="avg_price_dif > 0">
-                                        {{ avg_price_dif }}%
+                                    <span class="green" v-if="qty_dif > 0">
+                                        {{ qty_dif }}%
                                         <el-icon >
                                             <CaretTop />
                                         </el-icon>
                                     </span>
                                     <span class="red" v-else>
-                                        {{ avg_price_dif }}%
+                                        {{ qty_dif }}%
                                         <el-icon >
                                             <CaretBottom />
                                         </el-icon>

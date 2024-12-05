@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref,reactive,computed } from 'vue';
-import { packageListApi,bomListApi,selectDownload,queryDownload} from '@/api/mo';
+import { packageListApi,bomListApi,selectPackageDownload,queryPackageDownload} from '@/api/mo';
 import { zhCn,en } from 'element-plus/es/locales.mjs';
 
 interface TableRow {
@@ -10,6 +10,13 @@ interface TableRow {
 
 function headerRowStyle(){
     return {backgroundColor: "#ddebf7", textAlign: "center",color:'black',fontSize:'15px'}
+}
+
+const statusClass = ({row,rowIndex,}: {row: any,rowIndex: number}) => {
+  if (row.status === "Y") {
+    return 'success-row'
+  } 
+  return ''
 }
 
 const queryForm = reactive({
@@ -36,35 +43,41 @@ const language = ref('zh-cn')
 
 const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
 
-function dateToString(date:any){
-    if(date){
-        const newDate = new Date(date)
-        return newDate.toISOString()
-    }else{
-        return
-    }
-}
+// function dateToString(date:any){
+//     if(date){
+//         const newDate = new Date(date)
+//         return newDate.toISOString()
+//     }else{
+//         return
+//     }
+// }
 
 
 const queryHistories = async ()=>{
     loading.value = true
     isSearch.value = true
-    const res = await packageListApi({
-        item_name:queryForm.item_name,
-        package:queryForm.package,
-        bonding:queryForm.bonding,
-        lot_code:queryForm.lot_code,
-        supply:queryForm.supply,
-        order_date_start:dateToString(queryForm.order_date_start),
-        order_date_end:dateToString(queryForm.order_date_end),
-        page:1,
-        pagesize:pagesize.value
-    })
-    currentPage.value = 1
-    assyHistoryData.value = res.data
-    totalPage.value = res.total as number;
-    loading.value = false
-    isSearch.value = false 
+    try{
+        const res = await packageListApi({
+            item_name:queryForm.item_name,
+            package:queryForm.package,
+            bonding:queryForm.bonding,
+            lot_code:queryForm.lot_code,
+            supply:queryForm.supply,
+            order_date_start:queryForm.order_date_start,
+            order_date_end:queryForm.order_date_end,
+            page:1,
+            pagesize:pagesize.value
+        })
+        currentPage.value = 1
+        assyHistoryData.value = res.data
+        totalPage.value = res.total as number;
+        loading.value = false
+        isSearch.value = false 
+    }catch(error:any){
+        console.error("数据请求失败！")
+        loading.value = false
+        isSearch.value = false 
+    }
 }
 
 const queryReset = () => {
@@ -95,8 +108,8 @@ const handleCurrentChange = async (cp = currentPage.value) =>{
         bonding:queryForm.bonding,
         lot_code:queryForm.lot_code,
         supply:queryForm.supply,
-        order_date_start:dateToString(queryForm.order_date_start),
-        order_date_end:dateToString(queryForm.order_date_end),
+        order_date_start:queryForm.order_date_start,
+        order_date_end:queryForm.order_date_end,
         page:cp,page_size:pagesize.value})
     // const res = await axios.get('http://127.0.0.1:8000/test',{
     //     params:{page:cp,page_size:pagesize.value}
@@ -115,8 +128,8 @@ const handleSizeChange = async (ps = pagesize.value) =>{
         bonding:queryForm.bonding,
         lot_code:queryForm.lot_code,
         supply:queryForm.supply,
-        order_date_start:dateToString(queryForm.order_date_start),
-        order_date_end:dateToString(queryForm.order_date_end),
+        order_date_start:queryForm.order_date_start,
+        order_date_end:queryForm.order_date_end,
         page:1,page_size:ps})
     assyHistoryData.value = res.data;
     totalPage.value = res.total as number;
@@ -128,15 +141,15 @@ const handleSizeChange = async (ps = pagesize.value) =>{
 // 处理选择行变化
 const handleSelectionChange = (selection: TableRow[]) => {
       selectedRows.value = selection;
-      console.log("选中行：", selectedRows.value);
+    //   console.log("选中行：", selectedRows.value);
     };
 
 const handleSelectDownload = async () =>{
     sdownloading.value = true
     try{
         const selectedIds = selectedRows.value.map((row) => row.id);
-        console.log("选中ID列表：", selectedIds);
-        const res = await selectDownload({ids: selectedIds.join(",")})
+        // console.log("选中ID列表：", selectedIds);
+        const res = await selectPackageDownload({ids: selectedIds.join(",")})
         const url = window.URL.createObjectURL(new Blob([res.data],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })); // { type: 'text/csv' }
         const link = document.createElement("a");
         link.href = url;
@@ -156,12 +169,12 @@ const handleSelectDownload = async () =>{
 const queryContentDownload = async () => {
     downloading.value = true
     try{
-        const res = await queryDownload({item_name:queryForm.item_name,
+        const res = await queryPackageDownload({item_name:queryForm.item_name,
                                          package:queryForm.package,
                                          lot_code:queryForm.lot_code,
                                          bonding:queryForm.bonding,
-                                         order_date_start:dateToString(queryForm.order_date_start),
-                                         order_date_end:dateToString(queryForm.order_date_end),
+                                         order_date_start:queryForm.order_date_start,
+                                         order_date_end:queryForm.order_date_end,
                                          supply:queryForm.supply
         })
         const url = window.URL.createObjectURL(new Blob([res.data],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
@@ -210,6 +223,7 @@ const queryContentDownload = async () => {
                         type="date"
                         placeholder="起始于"
                         style="width: 150px;"
+                        value-format="YYYY-MM-DD"
                         clearable
                     />
                 </el-form-item>
@@ -220,6 +234,7 @@ const queryContentDownload = async () => {
                         type="date"
                         placeholder="结束于"
                         style="width: 150px;"
+                        value-format="YYYY-MM-DD"
                         clearable
                     />
                 </el-form-item>
@@ -271,6 +286,7 @@ const queryContentDownload = async () => {
                 :data="assyHistoryData" 
                 v-loading="loading" 
                 :header-cell-style="headerRowStyle" 
+                :row-class-name="statusClass"
                 @selection-change="handleSelectionChange"
                 border 
                 lazy  
@@ -282,15 +298,6 @@ const queryContentDownload = async () => {
                 <el-table-column type="expand">
                     <template #default="props">
                         <div class="ml-5 w-500">
-                            <!-- <el-table :data="props.row.children" border lazy :header-cell-style="headerRowStyle">
-                                <el-table-column prop="main_chip" label="主芯" align="center" width="80" show-overflow-tooltip />
-                                <el-table-column prop="bom_code" label="物料编码" align="center" width="350" show-overflow-tooltip  />
-                                <el-table-column prop="item_name" label="物料名称" align="center" width="200" show-overflow-tooltip />
-                                <el-table-column prop="bom_lot" label="批号" width="150" align="center" show-overflow-tooltip />
-                                <el-table-column prop="bom_business_qty" label="Die数" align="center" width="120" />
-                                <el-table-column prop="bom_second_qty" label="数量" width="60" align="center" show-overflow-tooltip />
-                                <el-table-column prop="bom_wafer_id" label="片号" width="680" show-overflow-tooltip />
-                            </el-table> -->
                             <div v-for="item in props.row.children" :key="item.id" style="margin-bottom: 20px;width: 80%;">
                                 <el-descriptions 
                                     class="margin-top"
@@ -361,21 +368,23 @@ const queryContentDownload = async () => {
                 <el-table-column prop="id" label="序号" width="80" align="center" sortable  />
                 <el-table-column prop="order_id" label="订单号" width="150" sortable align="center" show-overflow-tooltip />
                 <el-table-column prop="item_name" label="芯片名称" width="250" align="right" show-overflow-tooltip />
-                <el-table-column prop="package" label="封装形式" width="100" show-overflow-tooltip />
-                <el-table-column prop="lot_code" label="打印批号" width="150" show-overflow-tooltip />
+                <el-table-column prop="package" label="封装形式" width="100" align="right" show-overflow-tooltip />
+                <el-table-column prop="lot_code" label="打印批号" width="150" align="right" show-overflow-tooltip />
+                <el-table-column prop="bonding" label="打线图号" width="150" show-overflow-tooltip/>
                 <el-table-column prop="business_qty" label="订单数量" width="100" align="right"/>
                 <el-table-column prop="arrive_qty" label="来料数量" width="100" align="right"/>
-                <el-table-column prop="remark" label="备注" width="100" show-overflow-tooltip align="left" />
-                <el-table-column prop="order_date" label="订单日期" width="110" sortable align="center" />
                 
                 
                 <el-table-column prop="assy_step" label="加工类型" width="150" show-overflow-tooltip align="center"/>
                 <el-table-column prop="pgm_name" label="成测程序" width="100" show-overflow-tooltip align="right" />
+                <el-table-column prop="remark" label="备注" width="100" show-overflow-tooltip align="left" />
                 <el-table-column prop="loading_method" label="装片方式" width="90" show-overflow-tooltip/>
-                <el-table-column prop="bonding" label="打线图号" width="150" show-overflow-tooltip/>
+                
                 <el-table-column prop="wire" label="线材" width="100" align="right" show-overflow-tooltip/>
                 <el-table-column prop="package_remark" label="特殊备注" width="100" show-overflow-tooltip />
-                <el-table-column prop="complete_date" label="结束日期" width="110" sortable align="center" />               
+                <el-table-column prop="complete_date" label="结束日期" width="110" sortable align="center" />  
+                <!-- <el-table-column prop="status" label="状态码" width="110" align="center" />              -->
+                <el-table-column prop="order_date" label="订单日期" width="110" fixed="right" sortable align="center" />
                 <el-table-column prop="supply" label="封装厂" show-overflow-tooltip fixed="right" width="100" align="center" />
             </el-table>
             <div class="mt-3">
@@ -410,5 +419,7 @@ const queryContentDownload = async () => {
 /* .margin-top {
   margin-top: 20px;
 } */
-
+.el-table .success-row {
+  --el-table-tr-bg-color: var(--el-color-success-light-9);
+}
 </style>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { App } from 'vue'
 import type { RouteRecordRaw,RouteLocationNormalized } from 'vue-router'
-import { Layout } from '@/utils/routerHelper'
+import { Layout,getParentLayout } from '@/utils/routerHelper'
 
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
@@ -215,12 +215,25 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       },
       {
         path: 'stock-info',
-        component: () => import('@/views/Info/StockInfo.vue'),
+        component: getParentLayout(),
+        redirect:'/info/stock-info/stock-report',
         name: 'StockInfo',
         meta: {
           title: '库存信息',
           icon: 'vi-vaadin:stock',
-        }
+          alwaysShow:true,
+        },
+        children:[
+          {
+            path:'stock-report',
+            component: () => import('@/views/Info/StockInfo/StockReport.vue'),
+            name:'StockReport',
+            meta:{
+              title:'库存报表',
+              icon:'vi-line-md:document-report'
+            }
+          }
+        ]
       }
     ]
   },
