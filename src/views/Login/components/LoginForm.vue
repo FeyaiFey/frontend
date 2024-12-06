@@ -47,7 +47,12 @@
     const { currentRoute, addRoute, push } = useRouter()
 
     // 定义响应式变量
-    const loginForm = reactive({email:"",password:""});
+    interface LoginFormType {
+        email: string | undefined;
+        password: string | undefined;
+    }
+
+    const loginForm:LoginFormType = reactive({email:'',password:''});
     const loginFormRef = ref<FormInstance>();
     const rememberMe = ref(user.rememberMe);
     const isloading = ref(false);

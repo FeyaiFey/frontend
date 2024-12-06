@@ -78,31 +78,32 @@ const resizeHandler = debounce(() => {
   }
 }, 100)
 
-const contentResizeHandler = (e: TransitionEvent): void => {
-  if (e.propertyName === 'width') {
-    (async () => {
-      resizeHandler()
-    })();
-  }
+const contentResizeHandler = (e: Event): void => {
+    if (e instanceof TransitionEvent && e.propertyName === 'width') {
+        (async () => {
+            resizeHandler();
+        })();
+    }
 };
 
 onMounted(() => {
-  setTimeout(() => {
-    initChart()
-  }, 0)
+    setTimeout(() => {
+        initChart();
+    }, 0);
 
-  window.addEventListener('resize', resizeHandler)
+    window.addEventListener('resize', resizeHandler);
 
-  contentEl.value = document.getElementsByClassName(`${variables.namespace}-layout-content`)[0]
-  unref(contentEl) &&
-    (unref(contentEl) as Element).addEventListener('transitionend', contentResizeHandler)
-})
+    contentEl.value = document.getElementsByClassName(`${variables.namespace}-layout-content`)[0];
+    unref(contentEl) &&
+        (unref(contentEl) as Element).addEventListener('transitionend', contentResizeHandler);
+});
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', resizeHandler)
-  unref(contentEl) &&
-    (unref(contentEl) as Element).removeEventListener('transitionend', contentResizeHandler)
-})
+    window.removeEventListener('resize', resizeHandler);
+    unref(contentEl) &&
+        (unref(contentEl) as Element).removeEventListener('transitionend', contentResizeHandler);
+});
+
 
 onActivated(() => {
   if (echartRef) {

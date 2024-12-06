@@ -1,12 +1,12 @@
 import request from '@/axios'
 
 interface RoleParams {
-  email: string
+  email: string | undefined
 }
 
 interface LoginType {
-  email: string
-  password:string
+  email: string | undefined
+  password:string | undefined
 }
 
 interface RegisterType {

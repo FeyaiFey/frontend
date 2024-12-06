@@ -84,6 +84,12 @@ export const trim = (str: string) => {
  * @param {Date | number | string} time 需要转换的时间
  * @param {String} fmt 需要转换的格式 如 yyyy-MM-dd、yyyy-MM-dd HH:mm:ss
  */
+
+function padValue(value: number | string, length: number): string {
+  const strValue = String(value);
+  return strValue.length >= length ? strValue : ('00' + strValue).substr(strValue.length);
+}
+
 export function formatTime(time: Date | number | string, fmt: string) {
   if (!time) return ''
   else {
@@ -104,8 +110,10 @@ export function formatTime(time: Date | number | string, fmt: string) {
       if (new RegExp('(' + k + ')').test(fmt)) {
         fmt = fmt.replace(
           RegExp.$1,
-          RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
-        )
+          RegExp.$1.length === 1
+            ? String(o[k as keyof typeof o]) // 使用工具函数处理
+            : padValue(o[k as keyof typeof o], RegExp.$1.length)
+        );
       }
     }
     return fmt
